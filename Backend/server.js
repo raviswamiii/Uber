@@ -3,14 +3,14 @@ dotenv.config();
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
-const dbConnection = require("./config/mongodb")
+const dbConnection = require("./models/db");
 
 dbConnection();
 
 app.get("/", (req, res) => {
     res.send("Hello My World");
-});
+})
 
 app.listen(port, () => {
-    console.log(`Server is running on port: ${port}`)
-});
+    console.log(`Server is running on port: ${port}`);
+})
