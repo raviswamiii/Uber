@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
     minLength: [5, "Email must be at least 5 characters long"],
   },
 
-  password: { type: String, required: true, select: false },
+  password: { type: String, required: true },
 
   socketId: { type: String },
 });
