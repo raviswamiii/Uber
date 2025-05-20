@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
 const userModel = require("../models/userModel");
+const blackListToken = require("../models/blackListTokenModel");
 
 const createToken = (id) => {
     return jwt.sign({id}, process.env.SECRET_KEY);
@@ -78,4 +79,12 @@ const userProfile = async (req, res, next) => {
   res.json(req.user);
 }
 
-module.exports = { registerUser, loginUser, userProfile };
+const userLogout = async (req, res, next) => {
+  res.clearCookie("token");
+  const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+
+  await blackListToken.create({token});
+  res.json({success: true, message: "Logout successful"})
+}
+
+module.exports = { registerUser, loginUser, userProfile, userLogout };
