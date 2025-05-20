@@ -5,9 +5,12 @@ const app = express();
 const port = process.env.PORT || 3000;
 const dbConnection = require("./config/db");
 const userRouter = require("./routes/userRoute");
+const cookieParser = require("cookie-parser")
 
 dbConnection();
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+app.use(cookieParser());
 
 app.get("/", (req, res) => {
     res.send("Hello My World");

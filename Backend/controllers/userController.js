@@ -60,10 +60,13 @@ const loginUser = async (req, res) => {
 
     if(isMatch) {
       const token = createToken(user._id);
+      res.cookie("token", token)
       return res.json({success: true, token});
     } else {
       return res.json({success: false, message: "Invalid Credentials"})
     }
+
+    
 
   } catch (error) {
     console.log(error);
@@ -71,4 +74,8 @@ const loginUser = async (req, res) => {
   }
 }
 
-module.exports = { registerUser, loginUser };
+const userProfile = async (req, res, next) => {
+  res.json(req.user);
+}
+
+module.exports = { registerUser, loginUser, userProfile };
