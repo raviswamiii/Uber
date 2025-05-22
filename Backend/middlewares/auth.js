@@ -6,10 +6,10 @@ const userAuth = async (req, res, next) => {
     const token = req.cookies.token || req.headers.authorization?.split("")[1];
 
     if(!token) {
-        return res.json({success: false, message: "Unauthorized"});
+        return res.json({success: false, message: "token not found"});
     }
 
-    const isBlackListToken = await blackListToken.findOne({"token": token});
+    const isBlackListToken = await blackListToken.findOne({token: token});
 
     if(isBlackListToken) {
         return res.json({message: "Black listed token"})
