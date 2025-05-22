@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
 const captainModel = require("../models/captainModel");
+const blackListTokenModel = require("../models/blackListTokenModel");
 
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.SECRET_KEY);
@@ -47,33 +48,49 @@ const captainRegister = async (req, res) => {
 };
 
 const captainLogin = async (req, res) => {
-    try {
-        const {email, password} = req.body;
+  try {
+    const { email, password } = req.body;
 
-        const captain = await captainModel.findOne({email});
+    const captain = await captainModel.findOne({ email });
 
-        if(!captain) {
-            return res.json({success: false, message: "User does not exist."})
-        };
-
-        const isMatch = await bcrypt.compare(password, captain.password);
-
-        if(isMatch){
-            const token = createToken(captain._id);
-            res.cookie("token", token);
-            return res.json({success: true, token})
-        }else{
-            return res.json({success: false, message: "Invalid credentials"})
-        }
-    } catch (error) {
-        console.log(error);
-        res.json({success: false, message: error.message})
+    if (!captain) {
+      return res.json({ success: false, message: "User does not exist." });
     }
-}
+
+    const isMatch = await bcrypt.compare(password, captain.password);
+
+    if (isMatch) {
+      const token = createToken(captain._id);
+      res.cookie("token", token);
+      return res.json({ success: true, token });
+    } else {
+      return res.json({ success: false, message: "Invalid credentials" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
 
 const captainProfile = async (req, res) => {
-        res.json(req.captain);
-    
-}
+  try {
+    res.json(req.captain);
+  } catch (error) {
+    console.log(error);
+    res.json({success: false, message: error.message})
+  }
+};
 
-module.exports = { captainRegister, captainLogin, captainProfile };
+const captainLogout = async (req, res) => {
+  try {
+    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+    res.clearCookie("token");
+    await blackListTokenModel.create({ token });
+    res.json({ success: true, message: "You've been logged out." });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+module.exports = { captainRegister, captainLogin, captainProfile, captainLogout };

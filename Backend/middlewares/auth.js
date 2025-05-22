@@ -4,7 +4,7 @@ const blackListToken = require("../models/blackListTokenModel");
 const captainModel = require("../models/captainModel");
 
 const authUser = async (req, res, next) => {
-    const token = req.cookies.token || req.headers.authorization.split(" ")[1];
+    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
 
     if (!token) {
       return res.json({ message: "Unauthorized" });
@@ -30,7 +30,7 @@ const authUser = async (req, res, next) => {
 };
 
 const authCaptain = async (req, res, next) => {
-    const token = req.cookies.token || req.headers.authorization.split(" ")[1];
+    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
 
     if (!token) {
       return res.json({ message: "Unauthorized" });
