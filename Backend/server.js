@@ -4,8 +4,9 @@ const port = process.env.PORT || 4000;
 const databaseConnection = require("./config/mongodb");
 const dotenv = require("dotenv");
 const userRouter = require("./routes/userRoute");
-dotenv.config();
 const cookieParser = require("cookie-parser");
+const captainRouter = require("./routes/captainRoute");
+
 
 databaseConnection();
 app.use(express.json());
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 }) 
 
 app.use("/user", userRouter);
+app.use("/captain", captainRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
