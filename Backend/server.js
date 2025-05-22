@@ -8,7 +8,6 @@ const captainRouter = require("./routes/captainRoute");
 const dotenv = require("dotenv");
 dotenv.config();
 
-
 databaseConnection();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
