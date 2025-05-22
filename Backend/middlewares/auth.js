@@ -27,4 +27,30 @@ const userAuth = async (req, res, next) => {
     }
 }
 
-module.exports = userAuth;
+const captainAuth = async (req, res, next) => {
+    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+      return res.json({ message: "Unauthorized" });
+    }
+
+    const isBlackListToken = await blackListToken.findOne({token: token});
+
+    if(isBlackListToken){
+      return res.json({message: "Unauthorized"});
+    }
+
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    const captain = await captainModel.findById(decoded.id);
+
+    req.captain = captain;
+
+    return next();
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Unauthorized" });
+  }
+};
+
+module.exports = {userAuth, captainAuth};

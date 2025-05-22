@@ -5,8 +5,8 @@ const userModel = require("../models/userModel");
 const blackListToken = require("../models/blackListToken");
 
 const createToken = (id) => {
-    return jwt.sign({id}, process.env.SECRET_KEY);
-}
+  return jwt.sign({ id }, process.env.SECRET_KEY);
+};
 
 const userRegister = async (req, res) => {
     try {
