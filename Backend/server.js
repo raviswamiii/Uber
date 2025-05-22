@@ -2,10 +2,11 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 4000;
 const databaseConnection = require("./config/mongodb");
-const dotenv = require("dotenv");
 const userRouter = require("./routes/userRoute");
 const cookieParser = require("cookie-parser");
 const captainRouter = require("./routes/captainRoute");
+const dotenv = require("dotenv");
+dotenv.config();
 
 
 databaseConnection();
