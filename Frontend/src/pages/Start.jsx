@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import uberLogo from "../assets/uber-logo.png";
 
 export const Start = () => {
   return (
-    <div>
+    <div className="relative">
+      <img className="absolute top-3 left-5 z-10 h-7" src={uberLogo} alt="" />
       <div className="h-[80vh] overflow-hidden">
         <img
           className="h-full w-full object-cover scale-150"
@@ -13,7 +15,10 @@ export const Start = () => {
       </div>
       <div className="flex flex-col items-center justify-center h-[20vh] p-5">
         <h1 className="text-[7vw] font-bold mb-2">Get Started with Uber</h1>
-        <Link to="/userLogin" className="bg-black text-white w-full py-2 text-center rounded">
+        <Link
+          to="/userLogin"
+          className="bg-black text-white w-full py-2 text-center rounded"
+        >
           Continue
         </Link>
       </div>
