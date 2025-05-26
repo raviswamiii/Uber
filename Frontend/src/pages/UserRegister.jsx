@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import uberLogo from "../assets/uber-logo.png";
 
@@ -21,13 +21,17 @@ export const UserRegister = () => {
       password: password,
     };
     setUserData(newUser);
-    console.log(userData);
 
     setFirstName("");
     setLastName("");
     setEmail("");
     setPassword("");
   };
+
+  useEffect(()=>{
+    console.log(userData)
+  },[userData])
+
 
   return (
     <div className="relative flex flex-col h-screen justify-between p-7">
