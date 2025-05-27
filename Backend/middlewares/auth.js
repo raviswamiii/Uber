@@ -4,7 +4,7 @@ const blackListToken = require("../models/blackListToken");
 const captainModel = require("../models/captainModel");
 
 const userAuth = async (req, res, next) => {
-    const token = req.cookies.token || req.headers.authorization?.split("")[1];
+    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
 
     if(!token) {
         return res.json({success: false, message: "token not found"});
