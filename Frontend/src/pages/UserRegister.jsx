@@ -1,37 +1,46 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import uberLogo from "../assets/uber-logo.png";
-
+import { UserContext } from "../context/UserContext";
+import axios from "axios";
 export const UserRegister = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userData, setUserData] = useState({});
+  const { backendURL } = useContext(UserContext);
+  const navigate = useNavigate();
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
 
-    const newUser = {
-      fullName: {
-        firstName: firstName,
-        lastName: lastName,
-      },
-      email: email,
-      password: password,
-    };
-    setUserData(newUser);
+    try {
+      const newUser = {
+        fullName: {
+          firstName: firstName,
+          lastName: lastName,
+        },
+        email: email,
+        password: password,
+      };
 
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setPassword("");
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
+
+      const response = await axios.post(backendURL + "/user/register", newUser);
+
+      if (response.data.success) {
+        localStorage.setItem("token", response.data.token);
+        navigate("/home")
+      } else {
+        console.log(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  useEffect(()=>{
-    console.log(userData)
-  },[userData])
-
 
   return (
     <div className="relative flex flex-col h-screen justify-between p-7">
@@ -69,7 +78,7 @@ export const UserRegister = () => {
               value={email}
               required
               className="w-full py-2 px-3 rounded outline-none bg-gray-200"
-              type="text"
+              type="email"
               placeholder="email@gmail.com"
             />
           </div>

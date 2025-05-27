@@ -6,9 +6,12 @@ const userRouter = require("./routes/userRoute");
 const cookieParser = require("cookie-parser");
 const captainRouter = require("./routes/captainRoute");
 const dotenv = require("dotenv");
+const cors = require("cors");
+
 dotenv.config();
 
 databaseConnection();
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
