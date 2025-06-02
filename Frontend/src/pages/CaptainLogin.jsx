@@ -28,7 +28,7 @@ export const CaptainLogin = () => {
 
       if(response.data.success){
         localStorage.setItem('token', response.data.token);
-        navigate("/home")
+        navigate("/captainHome")
       }else{
         console.log(response.data.message)
       }

@@ -9,6 +9,8 @@ import { Route, Routes } from "react-router-dom";
 import { UserProtectedWrapper } from "./pages/UserProtectedWrapper";
 import { UserLogout } from "./pages/UserLogout";
 import { CaptainLogout } from "./pages/CaptainLogout";
+import { CaptainHome } from "./pages/CaptainHome";
+import { CaptainProtectedWrapper } from "./pages/CaptainProtectedWrapper";
 
 export const App = () => {
   return (
@@ -24,7 +26,15 @@ export const App = () => {
             </UserProtectedWrapper>
           }
         />
-        <Route path={"/userLogin"} element={<UserLogin />} />
+        <Route
+          path={"/captainHome"}
+          element={
+            <CaptainProtectedWrapper>
+              {" "}
+              <CaptainHome />
+            </CaptainProtectedWrapper>
+          }
+        />
         <Route path={"/userLogout"} element={<UserLogout />} />
         <Route path={"/userRegister"} element={<UserRegister />} />
         <Route path={"/captainLogin"} element={<CaptainLogin />} />
