@@ -1,23 +1,40 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import uberLogo from "../assets/uber-logo.png";
+import axios from "axios";
+import { UserContext } from "../context/UserContext";
 
 export const CaptainLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [captainData, setCaptainData] = useState({});
+  const {backendURL} = useContext(UserContext);
+  const navigate = useNavigate();
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
 
-    const captain = {
-      email: email,
-      password: password,
-    };
-    setCaptainData(captain);
+    try {
+      const captain = {
+        email: email,
+        password: password,
+      };
+      setCaptainData(captain);
 
-    setEmail("");
-    setPassword("");
+      setEmail("");
+      setPassword("");
+
+      const response = await axios.post(backendURL + "/captain/captainLogin", captain);
+
+      if(response.data.success){
+        localStorage.setItem('token', response.data.token);
+        navigate("/home")
+      }else{
+        console.log(response.data.message)
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -26,7 +43,11 @@ export const CaptainLogin = () => {
   return (
     <div className="relative flex flex-col h-screen justify-between p-7">
       <img className="absolute top-5 left-7 z-10 h-6" src={uberLogo} alt="" />
-      <form onSubmit={(e)=>onSubmitHandler(e)} className="flex flex-col gap-8 mt-10" action="">
+      <form
+        onSubmit={(e) => onSubmitHandler(e)}
+        className="flex flex-col gap-8 mt-10"
+        action=""
+      >
         <div className="flex flex-col gap-4">
           <div>
             <p className="text-lg font-semibold mb-1">Captain's email</p>

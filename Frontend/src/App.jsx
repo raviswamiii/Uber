@@ -8,6 +8,7 @@ import { CaptainRegister } from "./pages/captainRegister";
 import { Route, Routes } from "react-router-dom";
 import { UserProtectedWrapper } from "./pages/UserProtectedWrapper";
 import { UserLogout } from "./pages/UserLogout";
+import { CaptainLogout } from "./pages/CaptainLogout";
 
 export const App = () => {
   return (
@@ -28,6 +29,7 @@ export const App = () => {
         <Route path={"/userRegister"} element={<UserRegister />} />
         <Route path={"/captainLogin"} element={<CaptainLogin />} />
         <Route path={"/captainRegister"} element={<CaptainRegister />} />
+        <Route path={"/captainLogout"} element={<CaptainLogout />} />
       </Routes>
     </div>
   );

@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import uberLogo from "../assets/uber-logo.png";
+import { UserContext } from "../context/UserContext";
+import axios from "axios";
 
 export const CaptainRegister = () => {
   const [firstName, setFirstName] = useState("");
@@ -12,36 +14,57 @@ export const CaptainRegister = () => {
   const [vehicleCapacity, setVehicleCapacity] = useState("");
   const [vehicleType, setVehicleType] = useState("");
   const [captainData, setCaptainData] = useState({});
+  const { backendURL } = useContext(UserContext);
+  const navigate = useNavigate();
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
 
-    const newCaptain = {
-      firstName,
-      lastName,
-      email,
-      password,
-      vehicleColor,
-      vehiclePlate,
-      vehicleCapacity,
-      vehicleType
+    try {
+      const newCaptain = {
+        fullName: {
+          firstName: firstName,
+          lastName: lastName,
+        },
+        email: email,
+        password: password,
+        vehicle: {
+          color: vehicleColor,
+          plate: vehiclePlate,
+          capacity: vehicleCapacity,
+          vehicleType: vehicleType,
+        },
+      };
+
+      setCaptainData(newCaptain);
+
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
+      setVehicleColor("");
+      setVehiclePlate("");
+      setVehicleCapacity("");
+      setVehicleType("");
+
+      const response = await axios.post(
+        backendURL + "/captain/captainRegister",
+        newCaptain
+      );
+      if (response.data.success) {
+        localStorage.setItem("token", response.data.token);
+        navigate("/home");
+      } else {
+        console.log(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
     }
-
-    setCaptainData(newCaptain);
-
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setPassword("");
-    setVehicleColor("")
-    setVehiclePlate("");
-    setVehicleCapacity("");
-    setVehicleType("");
   };
 
-  useEffect(()=>{
-    console.log(captainData)
-  }, [captainData])
+  useEffect(() => {
+    console.log(captainData);
+  }, [captainData]);
   return (
     <div className="relative flex flex-col h-screen justify-between p-7">
       <img className="absolute top-5 left-7 z-10 h-6" src={uberLogo} alt="" />
