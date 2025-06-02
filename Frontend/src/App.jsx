@@ -35,6 +35,7 @@ export const App = () => {
             </CaptainProtectedWrapper>
           }
         />
+        <Route path={"/userLogin"} element={<UserLogin />} />
         <Route path={"/userLogout"} element={<UserLogout />} />
         <Route path={"/userRegister"} element={<UserRegister />} />
         <Route path={"/captainLogin"} element={<CaptainLogin />} />
