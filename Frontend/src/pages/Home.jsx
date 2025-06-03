@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import uberLogo from "../assets/uber-logo.png";
 import { RiArrowDownWideFill } from "react-icons/ri";
+import { LocationSearchPanel } from "../components/LocationSearchPanel";
 
 export const Home = () => {
   const [openPanel, setOpenPanel] = useState(false);
@@ -42,12 +43,16 @@ export const Home = () => {
             <div className="absolute h-14 w-[3px] bg-black rounded-full top-[42%] left-7"></div>
           </form>
           <div
-            className={`transition-all duration-500 ease-in-out  ${
+            className={`transition-all duration-500 ease-in-out overflow-hidden ${
               openPanel ? "bg-white h-[75vh]" : "h-0"
             }`}
-          ></div>
+          >
+           <LocationSearchPanel/>
+          </div>
         </div>
       </div>
+
+      
     </div>
   );
 };
