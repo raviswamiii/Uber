@@ -4,12 +4,12 @@ import { FaLocationDot } from "react-icons/fa6";
 import { BsCash } from "react-icons/bs";
 import { RiUserLocationFill } from "react-icons/ri";
 
-export const ConfirmRide = () => {
+export const ConfirmRide = ({setOpenConfirmRidePanel}) => {
   return (
     <div className="py-4 px-2">
       <div className="relative flex">
-        <h1 className="text-xl font-semibold">Choose a vehicle</h1>
-        <RiArrowDownWideFill className="absolute right-4 text-2xl text-gray-500" />
+        <h1 className="text-xl font-semibold">Confirm your Ride</h1>
+        <RiArrowDownWideFill onClick={()=>setOpenConfirmRidePanel(false)} className="absolute right-4 text-2xl text-gray-500" />
       </div>
       
       <div className="flex justify-center mb-2">
