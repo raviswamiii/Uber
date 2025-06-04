@@ -40,7 +40,7 @@ export const Home = () => {
             <div className="absolute h-14 w-[3px] bg-black rounded-full top-[42%] left-7"></div>
           </form>
           <div
-            className={`transition-all duration-500 ease-in-out overflow-hidden ₹{
+            className={`transition-all duration-500 ease-in-out overflow-hidden ${
               openPanel ? "bg-white h-[75vh]" : "h-0"
             }`}
           >
@@ -49,7 +49,7 @@ export const Home = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-0 w-full border-2 bg-white p-2 py-3">
+      <div className="absolute bottom-0 w-full bg-white p-2 py-3">
         <h1 className="text-xl font-semibold mb-4">Choose a vehicle</h1>
         <div className="flex flex-col gap-2">
           <div className="flex font-semibold items-center py-2 pr-2 border-2 border-gray-300 active:border-black rounded-lg leading-4">
