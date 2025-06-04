@@ -4,12 +4,14 @@ import { RiArrowDownWideFill } from "react-icons/ri";
 import { LocationSearchPanel } from "../components/LocationSearchPanel";
 import { ConfirmRide } from "../components/ConfirmRide";
 import { LookingForDriver } from "../components/LookingForDriver";
+import { WaitingForDriver } from "../components/WaitingForDriver";
 
 export const Home = () => {
   const [openPanel, setOpenPanel] = useState(false);
   const [openVehiclePanel, setOpenVehiclePanel] = useState(false);
   const [openConfirmRidePanel, setOpenConfirmRidePanel] = useState(false);
   const [lookingDriverPanel, setLookingDriverPanel] = useState(false);
+  const [waitingDriverPanel, setWaitingDriverPanel] = useState(false);
 
   useEffect(() => {
     if (openVehiclePanel) {
@@ -18,10 +20,22 @@ export const Home = () => {
   }, [openVehiclePanel]);
 
   useEffect(() => {
+    if (openConfirmRidePanel) {
+      setOpenVehiclePanel(false);
+    } 
+  }, [openConfirmRidePanel]);
+
+  useEffect(() => {
     if (lookingDriverPanel) {
       setOpenConfirmRidePanel(false);
     } 
   }, [lookingDriverPanel]);
+
+  useEffect(() => {
+    if (waitingDriverPanel) {
+      setLookingDriverPanel(false);
+    } 
+  }, [waitingDriverPanel]);
   return (
     <div className="relative h-screen w-full overflow-hidden">
       <img className="h-8 absolute left-4 top-3" src={uberLogo} alt="" />
@@ -155,7 +169,13 @@ export const Home = () => {
           lookingDriverPanel ? "translate-y-0" : "translate-y-full"
         }`}
       >
-        <LookingForDriver setLookingDriverPanel={setLookingDriverPanel} />
+        <LookingForDriver setLookingDriverPanel={setLookingDriverPanel} setWaitingDriverPanel={setWaitingDriverPanel} />
+      </div>
+
+      <div className={`absolute bottom-0 bg-white w-full transition-all duration-300 ease-in-out ${
+          waitingDriverPanel ? "translate-y-0" : "translate-y-full"
+        }`}>
+        <WaitingForDriver setWaitingDriverPanel={setWaitingDriverPanel}/>
       </div>
     </div>
   );
