@@ -3,17 +3,25 @@ import uberLogo from "../assets/uber-logo.png";
 import { RiArrowDownWideFill } from "react-icons/ri";
 import { LocationSearchPanel } from "../components/LocationSearchPanel";
 import { ConfirmRide } from "../components/ConfirmRide";
+import { LookingForDriver } from "../components/LookingForDriver";
 
 export const Home = () => {
   const [openPanel, setOpenPanel] = useState(false);
   const [openVehiclePanel, setOpenVehiclePanel] = useState(false);
   const [openConfirmRidePanel, setOpenConfirmRidePanel] = useState(false);
+  const [lookingDriverPanel, setLookingDriverPanel] = useState(false);
 
   useEffect(() => {
     if (openVehiclePanel) {
       setOpenPanel(false);
-    }
+    } 
   }, [openVehiclePanel]);
+
+  useEffect(() => {
+    if (lookingDriverPanel) {
+      setOpenConfirmRidePanel(false);
+    } 
+  }, [lookingDriverPanel]);
   return (
     <div className="relative h-screen w-full overflow-hidden">
       <img className="h-8 absolute left-4 top-3" src={uberLogo} alt="" />
@@ -136,7 +144,18 @@ export const Home = () => {
           openConfirmRidePanel ? "translate-y-0" : "translate-y-full"
         }`}
       >
-        <ConfirmRide setOpenConfirmRidePanel={setOpenConfirmRidePanel} />
+        <ConfirmRide
+          setOpenConfirmRidePanel={setOpenConfirmRidePanel}
+          setLookingDriverPanel={setLookingDriverPanel}
+        />
+      </div>
+
+      <div
+        className={`absolute bottom-0 bg-white w-full transition-all duration-300 ease-in-out ${
+          lookingDriverPanel ? "translate-y-0" : "translate-y-full"
+        }`}
+      >
+        <LookingForDriver setLookingDriverPanel={setLookingDriverPanel} />
       </div>
     </div>
   );
