@@ -21,7 +21,7 @@ export const WaitingForDriver = ({setWaitingDriverPanel}) => {
 
         <div className="text-end">
           <h1 className="text-lg font-semibold">Vishal Saini</h1>
-          <h2 className="text-xl font-semibold leading-4">RJ14 AB 1234</h2>
+          <h2 className="text-xl font-semibold leading-3 mb-1">RJ14 AB 1234</h2>
           <h3 className="text-sm text-gray-800">Maruti Suzuki Alto</h3>
         </div>
       </div>
