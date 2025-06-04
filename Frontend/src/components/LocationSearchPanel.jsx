@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoLocation } from "react-icons/io5";
 
-export const LocationSearchPanel = () => {
+export const LocationSearchPanel = ({setOpenVehiclePanel}) => {
   const locations = [
     "B-194 195, Sector-4, Vidyadhar Nagar, Jaipur, Rajasthan",
     "D-16 Doodh Mishthan Bhadar, BaniPark, Jaipur, Rajasthan",
@@ -14,6 +14,7 @@ export const LocationSearchPanel = () => {
         return (
           <div
             key={index}
+            onClick={()=>setOpenVehiclePanel(true)}
             className="flex items-center gap-4 leading-5 font-semibold border-2 active:border-black py-3 px-2 rounded-lg"
           >
             <div className="bg-[#eee] p-2 rounded-full">
