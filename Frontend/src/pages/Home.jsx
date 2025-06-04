@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import uberLogo from "../assets/uber-logo.png";
 import { RiArrowDownWideFill } from "react-icons/ri";
 import { LocationSearchPanel } from "../components/LocationSearchPanel";
+import { ConfirmRide } from "../components/ConfirmRide";
 
 export const Home = () => {
   const [openPanel, setOpenPanel] = useState(false);
@@ -114,6 +115,10 @@ export const Home = () => {
             <div className="text-lg">₹118.86</div>
           </div>
         </div>
+      </div>
+
+      <div className="absolute bottom-0 bg-white w-full">
+        <ConfirmRide/>
       </div>
     </div>
   );
