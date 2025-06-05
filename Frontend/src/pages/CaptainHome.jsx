@@ -11,7 +11,7 @@ import { RidePopUp } from "../components/RidePopUp";
 import { ConfirmRidePopUp } from "../components/ConfirmRidePopUp";
 
 export const CaptainHome = () => {
-  const [openRidePopUpPanel, setOpenRidePopUpPanel] = useState(true);
+  const [openRidePopUpPanel, setOpenRidePopUpPanel] = useState(false);
   const [openConfirmRidePopUpPanel, setOpenConfirmRidePopUpPanel] =
     useState(false);
 
@@ -20,6 +20,13 @@ export const CaptainHome = () => {
       setOpenRidePopUpPanel(false);
     }
   }, [openConfirmRidePopUpPanel]);
+
+  useEffect(()=>{
+    const timer = setTimeout(() => {
+      setOpenRidePopUpPanel(true)
+    }, 1000);
+    return () => clearTimeout(timer);
+  },[])
   return (
     <div className="relative h-screen">
       <img className="h-8 absolute left-4 top-3" src={uberLogo} alt="" />
