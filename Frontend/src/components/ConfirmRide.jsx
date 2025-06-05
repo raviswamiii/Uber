@@ -53,7 +53,7 @@ export const ConfirmRide = ({
       </div>
       <button
         onClick={() => setLookingDriverPanel(true)}
-        className="bg-green-600 w-full text-white rounded-md py-2 mt-2"
+        className="bg-green-600 w-full text-white font-semibold rounded-md py-2 mt-2"
       >
         Confirm
       </button>

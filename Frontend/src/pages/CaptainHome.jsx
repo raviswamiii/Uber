@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { BsCash } from "react-icons/bs";
 import { Link } from "react-router-dom";
@@ -6,10 +6,14 @@ import { HiMiniArrowLongLeft } from "react-icons/hi2";
 import { RiTimer2Line } from "react-icons/ri";
 import { RxTimer } from "react-icons/rx";
 import { RiBookletLine } from "react-icons/ri";
+import uberLogo from "../assets/uber-logo.png";
+import { RidePopUp } from "../components/RidePopUp";
 
 export const CaptainHome = () => {
+  const [openRidePopUpPanel, setOpenRidePopUpPanel] = useState(true);
   return (
-    <div className=" relative h-screen">
+    <div className="relative h-screen">
+      <img className="h-8 absolute left-4 top-3" src={uberLogo} alt="" />
       <Link to={"/home"}>
         <HiMiniArrowLongLeft className="absolute bg-white text-4xl p-2 rounded-full right-3 top-3 rotate-180" />
       </Link>
@@ -60,6 +64,12 @@ export const CaptainHome = () => {
             <p className="text-sm text-gray-900">Hours Online</p>
           </div>
         </div>
+      </div>
+
+      <div className={`absolute bottom-0 bg-white w-full transition-all ease-in-out duration-300 tranform ${
+        openRidePopUpPanel ? "translate-y-0" : "translate-y-full"
+      }`}>
+        <RidePopUp setOpenRidePopUpPanel={setOpenRidePopUpPanel}/>
       </div>
     </div>
   );
