@@ -36,6 +36,15 @@ export const Home = () => {
       setLookingDriverPanel(false);
     } 
   }, [waitingDriverPanel]);
+
+  useEffect(()=>{
+    const timer = setTimeout(() => {
+      if(lookingDriverPanel){
+        setWaitingDriverPanel(true)
+      }
+    }, 1000);
+    return () => clearTimeout(timer)
+  })
   return (
     <div className="relative h-screen w-full overflow-hidden">
       <img className="h-8 absolute left-4 top-3" src={uberLogo} alt="" />

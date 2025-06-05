@@ -11,7 +11,7 @@ export const ConfirmRidePopUp = ({ setOpenConfirmRidePopUpPanel }) => {
         <h1 className="text-xl font-semibold">Confirm this ride to Start</h1>
       </div>
 
-      <div className="flex items-center justify-between bg-yellow-400 p-3 rounded-lg my-4">
+      <div className="flex items-center justify-between border border-yellow-400 p-3 rounded-lg my-4">
         <div className="flex gap-3 items-center">
           <div className="h-10 w-10 rounded-full overflow-hidden bg-white">
             <img
@@ -53,7 +53,7 @@ export const ConfirmRidePopUp = ({ setOpenConfirmRidePopUpPanel }) => {
       <form className="mt-7 flex flex-col gap-2">
         <input className="text-lg bg-[#eee] py-3 px-8 font-mono rounded-lg placeholder-gray-500 outline-yellow-500 mb-2" type="number" placeholder="Enter OTP"/>
         <Link to={"/captainRiding"}>
-        <button className="bg-yellow-400 w-full text-black font-semibold rounded-md py-2">
+        <button className="bg-green-600 w-full text-white font-semibold rounded-md py-2">
         Confirm
       </button>
         </Link>

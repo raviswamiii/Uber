@@ -30,9 +30,6 @@ export const CaptainHome = () => {
   return (
     <div className="relative h-screen">
       <img className="h-8 absolute left-4 top-3" src={uberLogo} alt="" />
-      <Link to={"/home"}>
-        <HiMiniArrowLongLeft className="absolute bg-white text-4xl p-2 rounded-full right-3 top-3 rotate-180" />
-      </Link>
 
       <div className="h-[70%] overflow-hidden">
         <img
@@ -102,6 +99,8 @@ export const CaptainHome = () => {
           setOpenConfirmRidePopUpPanel={setOpenConfirmRidePopUpPanel}
         />
       </div>
+
+      
     </div>
   );
 };

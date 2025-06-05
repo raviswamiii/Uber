@@ -2,12 +2,13 @@ import React from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { BsCash } from "react-icons/bs";
 import { RiUserLocationFill } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
-export const RidePopUp = ({setOpenRidePopUpPanel, setOpenConfirmRidePopUpPanel}) => {
+export const FinishRide = ({ setOpenConfirmRidePopUpPanel }) => {
   return (
     <div className="py-4 px-2">
       <div className="flex">
-        <h1 className="text-xl font-semibold">New Ride Available!</h1>
+        <h1 className="text-xl font-semibold">Finish this Ride</h1>
       </div>
 
       <div className="flex items-center justify-between border border-yellow-400 p-3 rounded-lg my-4">
@@ -49,12 +50,11 @@ export const RidePopUp = ({setOpenRidePopUpPanel, setOpenConfirmRidePopUpPanel})
           </div>
         </div>
       </div>
-      <button onClick={()=>setOpenConfirmRidePopUpPanel(true)} className="bg-green-600 w-full text-white font-semibold rounded-md py-2 mt-5">
-        Accept
-      </button>
-      <button onClick={()=>setOpenRidePopUpPanel(false)} className="bg-gray-300 w-full text-black font-semibold rounded-md py-2 mt-2">
-        Ignore
-      </button>
+      <Link to={"/captainHome"}>
+        <button className="bg-green-500 w-full text-white font-semibold rounded-md py-2 mt-14">
+          Finish Ride
+        </button>
+      </Link>
     </div>
   );
 };
