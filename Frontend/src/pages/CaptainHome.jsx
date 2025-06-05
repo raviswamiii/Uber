@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { BsCash } from "react-icons/bs";
 import { Link } from "react-router-dom";
@@ -8,9 +8,18 @@ import { RxTimer } from "react-icons/rx";
 import { RiBookletLine } from "react-icons/ri";
 import uberLogo from "../assets/uber-logo.png";
 import { RidePopUp } from "../components/RidePopUp";
+import { ConfirmRidePopUp } from "../components/ConfirmRidePopUp";
 
 export const CaptainHome = () => {
   const [openRidePopUpPanel, setOpenRidePopUpPanel] = useState(true);
+  const [openConfirmRidePopUpPanel, setOpenConfirmRidePopUpPanel] =
+    useState(false);
+
+  useEffect(() => {
+    if (openConfirmRidePopUpPanel === false) {
+      setOpenRidePopUpPanel(false);
+    }
+  }, [openConfirmRidePopUpPanel]);
   return (
     <div className="relative h-screen">
       <img className="h-8 absolute left-4 top-3" src={uberLogo} alt="" />
@@ -47,29 +56,44 @@ export const CaptainHome = () => {
 
         <div className="flex justify-center gap-5 bg-gray-200 rounded-xl p-3 my-5">
           <div className="flex flex-col items-center">
-            <RiTimer2Line className="text-2xl"/>
+            <RiTimer2Line className="text-2xl" />
             <h3 className="text-base font-semibold">10.2</h3>
             <p className="text-sm text-gray-900">Hours Online</p>
           </div>
 
           <div className="flex flex-col items-center">
-            <RxTimer  className="text-2xl"/>
+            <RxTimer className="text-2xl" />
             <h3 className="text-base font-semibold">10.2</h3>
             <p className="text-sm text-gray-900">Hours Online</p>
           </div>
 
           <div className="flex flex-col items-center">
-            <RiBookletLine  className="text-2xl"/>
+            <RiBookletLine className="text-2xl" />
             <h3 className="text-base font-semibold">10.2</h3>
             <p className="text-sm text-gray-900">Hours Online</p>
           </div>
         </div>
       </div>
 
-      <div className={`absolute bottom-0 bg-white w-full transition-all ease-in-out duration-300 tranform ${
-        openRidePopUpPanel ? "translate-y-0" : "translate-y-full"
-      }`}>
-        <RidePopUp setOpenRidePopUpPanel={setOpenRidePopUpPanel}/>
+      <div
+        className={`absolute bottom-0 bg-white w-full transition-all ease-in-out duration-300 tranform ${
+          openRidePopUpPanel ? "translate-y-0" : "translate-y-full"
+        }`}
+      >
+        <RidePopUp
+          setOpenRidePopUpPanel={setOpenRidePopUpPanel}
+          setOpenConfirmRidePopUpPanel={setOpenConfirmRidePopUpPanel}
+        />
+      </div>
+
+      <div
+        className={`pt-5 px-1 h-screen absolute bottom-0 bg-white w-full transition-all ease-in-out duration-300 tranform ${
+          openConfirmRidePopUpPanel ? "translate-y-0" : "translate-y-full"
+        }`}
+      >
+        <ConfirmRidePopUp
+          setOpenConfirmRidePopUpPanel={setOpenConfirmRidePopUpPanel}
+        />
       </div>
     </div>
   );

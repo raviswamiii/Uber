@@ -3,11 +3,11 @@ import { FaLocationDot } from "react-icons/fa6";
 import { BsCash } from "react-icons/bs";
 import { RiUserLocationFill } from "react-icons/ri";
 
-export const RidePopUp = ({setOpenRidePopUpPanel, setOpenConfirmRidePopUpPanel}) => {
+export const ConfirmRidePopUp = ({setOpenConfirmRidePopUpPanel}) => {
   return (
     <div className="py-4 px-2">
       <div className="flex">
-        <h1 className="text-xl font-semibold">New Ride Available!</h1>
+        <h1 className="text-xl font-semibold">Confirm this ride to Start</h1>
       </div>
 
       <div className="flex items-center justify-between bg-yellow-400 p-3 rounded-lg my-4">
@@ -49,11 +49,11 @@ export const RidePopUp = ({setOpenRidePopUpPanel, setOpenConfirmRidePopUpPanel})
           </div>
         </div>
       </div>
-      <button onClick={()=>setOpenConfirmRidePopUpPanel(true)} className="bg-yellow-400 w-full text-black font-semibold rounded-md py-2 mt-5">
-        Accept
+      <button className="bg-yellow-400 w-full text-black font-semibold rounded-md py-2 mt-5">
+        Confirm
       </button>
-      <button onClick={()=>setOpenRidePopUpPanel(false)} className="bg-gray-300 w-full text-black font-semibold rounded-md py-2 mt-2">
-        Ignore
+      <button onClick={()=>setOpenConfirmRidePopUpPanel(false)} className="bg-red-500 w-full text-white font-semibold rounded-md py-2 mt-2">
+        Cancel
       </button>
     </div>
   );
