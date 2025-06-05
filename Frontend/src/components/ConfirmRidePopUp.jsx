@@ -2,6 +2,7 @@ import React from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { BsCash } from "react-icons/bs";
 import { RiUserLocationFill } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 export const ConfirmRidePopUp = ({ setOpenConfirmRidePopUpPanel }) => {
   return (
@@ -51,9 +52,11 @@ export const ConfirmRidePopUp = ({ setOpenConfirmRidePopUpPanel }) => {
       </div>
       <form className="mt-7 flex flex-col gap-2">
         <input className="text-lg bg-[#eee] py-3 px-8 font-mono rounded-lg placeholder-gray-500 outline-yellow-500 mb-2" type="number" placeholder="Enter OTP"/>
+        <Link to={"/captainRiding"}>
         <button className="bg-yellow-400 w-full text-black font-semibold rounded-md py-2">
         Confirm
       </button>
+        </Link>
       <button
         onClick={() => setOpenConfirmRidePopUpPanel(false)}
         className="bg-red-500 w-full text-white font-semibold rounded-md py-2"
