@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const captainRouter = require("./routes/captainRoute");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const mapRouter = require("./routes/mapRoutes");
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 
 app.use("/user", userRouter);
 app.use("/captain", captainRouter);
+app.use("/maps", mapRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
