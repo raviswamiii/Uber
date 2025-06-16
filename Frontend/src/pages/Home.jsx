@@ -5,46 +5,120 @@ import { LocationSearchPanel } from "../components/LocationSearchPanel";
 import { ConfirmRide } from "../components/ConfirmRide";
 import { LookingForDriver } from "../components/LookingForDriver";
 import { WaitingForDriver } from "../components/WaitingForDriver";
+import axios from "axios";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 export const Home = () => {
+  const { backendURL } = useContext(UserContext);
   const [openPanel, setOpenPanel] = useState(false);
   const [openVehiclePanel, setOpenVehiclePanel] = useState(false);
   const [openConfirmRidePanel, setOpenConfirmRidePanel] = useState(false);
   const [lookingDriverPanel, setLookingDriverPanel] = useState(false);
   const [waitingDriverPanel, setWaitingDriverPanel] = useState(false);
+  const [pickup, setPickup] = useState("");
+  const [destination, setDestination] = useState("");
+  const [pickupSuggestions, setPickupSuggestions] = useState([]);
+  const [destinationSuggestions, setDestinationSuggestions] = useState([]);
+  const [active, setActive] = useState();
+  const [fare, setFare] = useState();
 
   useEffect(() => {
     if (openVehiclePanel) {
       setOpenPanel(false);
-    } 
+    }
   }, [openVehiclePanel]);
 
   useEffect(() => {
     if (openConfirmRidePanel) {
       setOpenVehiclePanel(false);
-    } 
+    }
   }, [openConfirmRidePanel]);
 
   useEffect(() => {
     if (lookingDriverPanel) {
       setOpenConfirmRidePanel(false);
-    } 
+    }
   }, [lookingDriverPanel]);
 
   useEffect(() => {
     if (waitingDriverPanel) {
       setLookingDriverPanel(false);
-    } 
+    }
   }, [waitingDriverPanel]);
 
-  useEffect(()=>{
+  useEffect(() => {
     const timer = setTimeout(() => {
-      if(lookingDriverPanel){
-        setWaitingDriverPanel(true)
+      if (lookingDriverPanel) {
+        setWaitingDriverPanel(true);
       }
     }, 1000);
-    return () => clearTimeout(timer)
-  })
+    return () => clearTimeout(timer);
+  });
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+  };
+
+  const onPickupHandler = async (e) => {
+    const value = e.target.value;
+    setPickup(value);
+
+    if (!value.trim()) {
+      setPickupSuggestions([]);
+      return;
+    }
+
+    try {
+      const response = await axios.get(backendURL + "/maps/getSuggestions", {
+        params: { input: value },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+
+      setPickupSuggestions(response.data.suggestions);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onDestinationHandler = async (e) => {
+    const value = e.target.value;
+    setDestination(value);
+
+    if (!value.trim()) {
+      setDestinationSuggestions([]);
+      return;
+    }
+
+    try {
+      const response = await axios.get(backendURL + "/maps/getSuggestions", {
+        params: { input: value },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+
+      setDestinationSuggestions(response.data.suggestions);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const findTrip = async () => {
+  try {
+    setOpenVehiclePanel(true);
+
+    const response = await axios.get(backendURL + "/rides/getFare", {
+      params: { pickup, destination },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    setFare(response.data);
+  } catch (error) {
+    console.log(error)
+  }
+};
+
   return (
     <div className="relative h-screen w-full overflow-hidden">
       <img className="h-8 absolute left-4 top-3" src={uberLogo} alt="" />
@@ -56,7 +130,10 @@ export const Home = () => {
           alt=""
         />
         <div className=" bg-white w-full  absolute bottom-0">
-          <form className="flex flex-col p-3 gap-3 h-[25vh] relative">
+          <form
+            onSubmit={onSubmitHandler}
+            className="flex flex-col p-3 gap-3 h-[25vh] relative"
+          >
             <div className="flex items-center mb-1">
               <h1 className="text-xl font-semibold">Find a trip</h1>
               <RiArrowDownWideFill
@@ -69,18 +146,35 @@ export const Home = () => {
               />
             </div>
             <input
-              onClick={() => setOpenPanel(true)}
+              onClick={() => {
+                setOpenPanel(true);
+                setActive("pickup");
+              }}
+              onChange={onPickupHandler}
+              value={pickup}
               className="bg-[#eee] py-2 px-8 rounded-lg placeholder-gray-500 outline-yellow-500"
               type="text"
               placeholder="Add a pick-up location"
             />
             <input
-              onClick={() => setOpenPanel(true)}
+              onClick={() => {
+                setOpenPanel(true);
+                setActive("destination");
+              }}
+              onChange={onDestinationHandler}
+              value={destination}
               className="bg-[#eee] py-2 px-8 rounded-lg placeholder-gray-500 outline-yellow-500 mb-5"
               type="text"
               placeholder="Enter your destination"
             />
-            <div className="absolute h-14 w-[3px] bg-black rounded-full top-[42%] left-7"></div>
+            {/* <div className="absolute h-14 w-[3px] bg-black rounded-full top-[42%] left-7"></div> */}
+            <button
+              onClick={findTrip}
+              className="bg-black text-white rounded-md py-3"
+              type="submit"
+            >
+              Find a trip
+            </button>
           </form>
           <div
             className={`transition-all duration-300 ease-in-out overflow-hidden ${
@@ -88,8 +182,12 @@ export const Home = () => {
             }`}
           >
             <LocationSearchPanel
-              setOpenVehiclePanel={setOpenVehiclePanel}
-              setOpenConfirmRidePanel={setOpenConfirmRidePanel}
+              suggestions={
+                active === "pickup" ? pickupSuggestions : destinationSuggestions
+              }
+              setPickup={setPickup}
+              setDestination={setDestination}
+              active={active}
             />
           </div>
         </div>
@@ -178,13 +276,18 @@ export const Home = () => {
           lookingDriverPanel ? "translate-y-0" : "translate-y-full"
         }`}
       >
-        <LookingForDriver setLookingDriverPanel={setLookingDriverPanel} setWaitingDriverPanel={setWaitingDriverPanel} />
+        <LookingForDriver
+          setLookingDriverPanel={setLookingDriverPanel}
+          setWaitingDriverPanel={setWaitingDriverPanel}
+        />
       </div>
 
-      <div className={`absolute bottom-0 bg-white w-full transition-all duration-300 ease-in-out ${
+      <div
+        className={`absolute bottom-0 bg-white w-full transition-all duration-300 ease-in-out ${
           waitingDriverPanel ? "translate-y-0" : "translate-y-full"
-        }`}>
-        <WaitingForDriver setWaitingDriverPanel={setWaitingDriverPanel}/>
+        }`}
+      >
+        <WaitingForDriver setWaitingDriverPanel={setWaitingDriverPanel} />
       </div>
     </div>
   );

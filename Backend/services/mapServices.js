@@ -79,12 +79,9 @@ const getAutoCompleteSuggestions = async (input) => {
             return response.data.features
                 .map(feature => feature.place_name)
                 .filter(Boolean);
-        } else {
-            throw new Error('Unable to fetch suggestions');
         }
     } catch (err) {
         console.error(err);
-        throw err;
     }
 };
 

@@ -1,5 +1,5 @@
 const {validationResult} = require("express-validator");
-const { createRide } = require("../services/rideServices");
+const { createRide, fareCalculation } = require("../services/rideServices");
 
 const createRides = async (req, res) => {
     const errors = validationResult(req);
@@ -17,4 +17,20 @@ const createRides = async (req, res) => {
     
 }
 
-module.exports = {createRides};
+const getFare = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { pickup, destination } = req.query;
+
+    try {
+        const fare = await fareCalculation({pickup, destination});
+        return res.status(200).json(fare);
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+}
+
+module.exports = {createRides, getFare};

@@ -2,7 +2,7 @@ const rideModel = require("../models/rideModel");
 const { getDistanceTime } = require("./mapServices");
 const crypto = require("crypto");
 
-const getFare = async ({pickup, destination}) => {
+const fareCalculation = async ({pickup, destination}) => {
     if(!pickup || !destination) {
         throw new Error("Pickup and destination are required");
     }
@@ -67,4 +67,4 @@ const createRide = async ({user, pickup, destination, vehicleType}) => {
     return ride;
 }
 
-module.exports = {getFare, createRide}
+module.exports = {fareCalculation, createRide}
