@@ -206,7 +206,7 @@ export const Home = () => {
           />
         </div>
 
-        <div className="flex flex-col gap-2">
+        { fare && ( <div className="flex flex-col gap-2">
           <div
             onClick={() => setOpenConfirmRidePanel(true)}
             className="flex font-semibold items-center py-2 pr-2 border-2 border-gray-300 active:border-black rounded-lg leading-4"
@@ -221,7 +221,7 @@ export const Home = () => {
               <h3>2 mins away</h3>
               <p className="text-sm text-gray-800">Affordable, compact rides</p>
             </div>
-            <div className="text-lg">₹65</div>
+            <div className="text-lg">₹{fare.car}</div>
           </div>
 
           <div
@@ -238,7 +238,7 @@ export const Home = () => {
               <h3>6 mins away</h3>
               <p className="text-sm text-gray-800">Affordable, moto rides</p>
             </div>
-            <div className="text-lg">₹193.20</div>
+            <div className="text-lg">₹{fare.moto}</div>
           </div>
 
           <div
@@ -255,9 +255,9 @@ export const Home = () => {
               <h3>3 mins away</h3>
               <p className="text-sm text-gray-800">Affordable, auto rides</p>
             </div>
-            <div className="text-lg">₹118.86</div>
+            <div className="text-lg">₹{fare.auto}</div>
           </div>
-        </div>
+        </div>)}
       </div>
 
       <div

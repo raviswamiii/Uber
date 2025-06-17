@@ -30,9 +30,9 @@ const fareCalculation = async ({pickup, destination}) => {
     console.log(distanceTime)
 
     const fare = {
-        auto: (baseFare.auto + ((distanceTime.distance / 1000) * perKMRate.auto) + ((distanceTime.duration / 60) * perMinuteRate.auto)),
-        car: (baseFare.car + ((distanceTime.distance / 1000) * perKMRate.car) + ((distanceTime.duration / 60) * perMinuteRate.car)),
-        moto: (baseFare.moto + ((distanceTime.distance / 1000) * perKMRate.moto) + ((distanceTime.duration / 60) * perMinuteRate.moto)),
+        auto: Math.round(baseFare.auto + ((distanceTime.distance / 1000) * perKMRate.auto) + ((distanceTime.duration / 60) * perMinuteRate.auto)),
+        car: Math.round(baseFare.car + ((distanceTime.distance / 1000) * perKMRate.car) + ((distanceTime.duration / 60) * perMinuteRate.car)),
+        moto: Math.round(baseFare.moto + ((distanceTime.distance / 1000) * perKMRate.moto) + ((distanceTime.duration / 60) * perMinuteRate.moto)),
     
     };
 
