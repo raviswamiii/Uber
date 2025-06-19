@@ -9,6 +9,9 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const mapRouter = require("./routes/mapRoutes");
 const rideRouter = require("./routes/rideRoutes");
+const http = require("http");
+const server = http.createServer(app);
+const { initializeSocket } = require("./socket");
 
 dotenv.config();
 
@@ -17,6 +20,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
+initializeSocket(server);
 
 app.get("/", (req, res) => {
     res.send("Hellow my world.");
@@ -27,6 +31,6 @@ app.use("/captain", captainRouter);
 app.use("/maps", mapRouter);
 app.use("/rides", rideRouter);
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
 })
