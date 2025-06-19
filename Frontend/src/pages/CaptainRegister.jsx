@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import uberLogo from "../assets/uber-logo.png";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
+import { CaptainContext } from "../context/CaptainContext";
 
 export const CaptainRegister = () => {
   const [firstName, setFirstName] = useState("");
@@ -13,8 +14,8 @@ export const CaptainRegister = () => {
   const [vehiclePlate, setVehiclePlate] = useState("");
   const [vehicleCapacity, setVehicleCapacity] = useState("");
   const [vehicleType, setVehicleType] = useState("");
-  const [captainData, setCaptainData] = useState({});
   const { backendURL } = useContext(UserContext);
+  const {captainData, setCaptainData} = useContext(CaptainContext)
   const navigate = useNavigate();
 
   const onSubmitHandler = async (e) => {

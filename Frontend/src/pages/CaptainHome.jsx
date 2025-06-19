@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { FaLocationDot } from "react-icons/fa6";
-import { BsCash } from "react-icons/bs";
-import { Link } from "react-router-dom";
-import { HiMiniArrowLongLeft } from "react-icons/hi2";
+import React, { useContext, useEffect, useState } from "react";
 import { RiTimer2Line } from "react-icons/ri";
 import { RxTimer } from "react-icons/rx";
 import { RiBookletLine } from "react-icons/ri";
 import uberLogo from "../assets/uber-logo.png";
 import { RidePopUp } from "../components/RidePopUp";
 import { ConfirmRidePopUp } from "../components/ConfirmRidePopUp";
+import { CaptainContext } from "../context/CaptainContext";
 
 export const CaptainHome = () => {
   const [openRidePopUpPanel, setOpenRidePopUpPanel] = useState(false);
   const [openConfirmRidePopUpPanel, setOpenConfirmRidePopUpPanel] =
     useState(false);
+
+  const {captainData} = useContext(CaptainContext)
 
   useEffect(() => {
     if (openConfirmRidePopUpPanel === false) {
@@ -49,7 +48,7 @@ export const CaptainHome = () => {
                 alt=""
               />
             </div>
-            <h1 className="text-lg font-semibold">Shah Rukh Khan</h1>
+            <h1 className="text-lg font-semibold capitalize">{captainData.fullName?.firstName + " " + captainData.fullName?.lastName}</h1>
           </div>
 
           <div className="text-end">
