@@ -7,6 +7,10 @@ import { RiUserLocationFill } from "react-icons/ri";
 export const ConfirmRide = ({
   setOpenConfirmRidePanel,
   setLookingDriverPanel,
+  pickup, 
+  destination,
+  fare,
+  vehicleType
 }) => {
   return (
     <div className="py-4 px-2">
@@ -32,21 +36,21 @@ export const ConfirmRide = ({
 
           <div>
             <h2 className="text-xl font-semibold leading-5">563/11-A</h2>
-            <p className="text-sm text-gray-800">Jalmahal, Jaipur</p>
+            <p className="text-sm text-gray-800">{pickup}</p>
           </div>
         </div>
         <div className="flex items-center border-bottom gap-4 p-2 border-t border-gray-400">
           <FaLocationDot className="h-4" />
           <div>
             <h2 className="text-xl font-semibold leading-5">563/11-A</h2>
-            <p className="text-sm text-gray-800">Jalmahal, Jaipur</p>
+            <p className="text-sm text-gray-800">{destination}</p>
           </div>
         </div>
         <div className="flex items-center border-bottom gap-4 p-2 border-t border-gray-400">
           <BsCash className="h-4" />
 
           <div>
-            <h2 className="text-xl font-semibold leading-5">₹193.20</h2>
+            <h2 className="text-xl font-semibold leading-5">₹{fare?.[vehicleType]}</h2>
             <p className="text-sm text-gray-800">Cash Cash</p>
           </div>
         </div>
