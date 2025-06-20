@@ -7,7 +7,6 @@ const captainSchema = new mongoose.Schema({
   },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  socketId: { type: String },
   status: {
     type: String,
     enum: ["active", "inactive"],
@@ -34,6 +33,8 @@ const captainSchema = new mongoose.Schema({
       type: Number,
     },
   },
+  socketId: { type: String },
+
 });
 
 const captainModel = mongoose.model("captain", captainSchema);

@@ -63,9 +63,7 @@ export const CaptainRegister = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(captainData);
-  }, [captainData]);
+  
   return (
     <div className="relative flex flex-col h-screen justify-between p-7">
       <img className="absolute top-5 left-7 z-10 h-6" src={uberLogo} alt="" />

@@ -27,7 +27,6 @@ export const Home = () => {
   const [vehicleType, setVehicleType] = useState();
 
  useEffect(() => {
-  console.log("Emitting join with:", userData._id);
         socket.emit("join", { userType: "user", userId: userData._id })
     }, [ userData ])
 

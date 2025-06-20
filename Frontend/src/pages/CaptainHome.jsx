@@ -6,13 +6,18 @@ import uberLogo from "../assets/uber-logo.png";
 import { RidePopUp } from "../components/RidePopUp";
 import { ConfirmRidePopUp } from "../components/ConfirmRidePopUp";
 import { CaptainContext } from "../context/CaptainContext";
+import { SocketContext } from "../context/SocketContext";
 
 export const CaptainHome = () => {
   const [openRidePopUpPanel, setOpenRidePopUpPanel] = useState(false);
   const [openConfirmRidePopUpPanel, setOpenConfirmRidePopUpPanel] =
     useState(false);
-
   const { captainData } = useContext(CaptainContext);
+  const {socket} = useContext(SocketContext);
+
+  useEffect(() => {
+    socket.emit("join", {userType: "captain", userId: captainData._id});
+  }, [captainData]);
 
   useEffect(() => {
     if (openConfirmRidePopUpPanel === false) {

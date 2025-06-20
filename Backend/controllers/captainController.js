@@ -10,7 +10,7 @@ const createToken = (id) => {
 
 const captainRegister = async (req, res) => {
   try {
-    const { fullName, email, password, vehicle } = req.body;
+    const { fullName, email, password, vehicle, socketId } = req.body;
 
     const exists = await captainModel.findOne({ email });
 
@@ -34,6 +34,7 @@ const captainRegister = async (req, res) => {
       email,
       password: hashPassword,
       vehicle,
+      socketId,
     });
 
     const captain = await newCaptain.save();
