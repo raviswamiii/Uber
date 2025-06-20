@@ -3,13 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import uberLogo from "../assets/uber-logo.png";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
+import { CaptainContext } from "../context/CaptainContext";
 
 export const CaptainLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [captainData, setCaptainData] = useState({});
-  const {backendURL} = useContext(UserContext);
+  const { backendURL } = useContext(UserContext);
   const navigate = useNavigate();
+  const { captainData, setCaptainData } = useContext(CaptainContext);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -19,18 +20,25 @@ export const CaptainLogin = () => {
         email: email,
         password: password,
       };
-      setCaptainData(captain);
 
       setEmail("");
       setPassword("");
 
-      const response = await axios.post(backendURL + "/captain/captainLogin", captain);
+      const response = await axios.post(
+        backendURL + "/captain/captainLogin",
+        captain
+      );
 
-      if(response.data.success){
-        localStorage.setItem('token', response.data.token);
-        navigate("/captainHome")
-      }else{
-        console.log(response.data.message)
+      if (response.data.success) {
+        setCaptainData(response.data.captain);
+        localStorage.setItem(
+          "captainData",
+          JSON.stringify(response.data.captain)
+        ); 
+        localStorage.setItem("token", response.data.token);
+        navigate("/captainHome");
+      } else {
+        console.log(response.data.message);
       }
     } catch (error) {
       console.log(error);

@@ -62,7 +62,7 @@ const captainLogin = async (req, res) => {
     if (isMatch) {
       const token = createToken(captain._id);
       res.cookie("token", token);
-      return res.json({ success: true, token });
+      return res.json({ success: true, token, captain });
     } else {
       return res.json({ success: false, message: "Invalid credentials" });
     }

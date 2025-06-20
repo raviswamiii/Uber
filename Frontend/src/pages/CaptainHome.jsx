@@ -12,7 +12,7 @@ export const CaptainHome = () => {
   const [openConfirmRidePopUpPanel, setOpenConfirmRidePopUpPanel] =
     useState(false);
 
-  const {captainData} = useContext(CaptainContext)
+  const { captainData } = useContext(CaptainContext);
 
   useEffect(() => {
     if (openConfirmRidePopUpPanel === false) {
@@ -20,14 +20,14 @@ export const CaptainHome = () => {
     }
   }, [openConfirmRidePopUpPanel]);
 
-  useEffect(()=>{
+  useEffect(() => {
     const timer = setTimeout(() => {
-      setOpenRidePopUpPanel(true)
+      setOpenRidePopUpPanel(true);
     }, 1000);
     return () => clearTimeout(timer);
-  },[])
+  }, []);
   return (
-    <div className="relative h-screen">
+    <div className="relative h-screen overflow-hidden">
       <img className="h-8 absolute left-4 top-3" src={uberLogo} alt="" />
 
       <div className="h-[70%] overflow-hidden">
@@ -48,7 +48,11 @@ export const CaptainHome = () => {
                 alt=""
               />
             </div>
-            <h1 className="text-lg font-semibold capitalize">{captainData.fullName?.firstName + " " + captainData.fullName?.lastName}</h1>
+            <h1 className="text-lg font-semibold capitalize">
+              {captainData?.fullName
+                ? `${captainData.fullName.firstName} ${captainData.fullName.lastName}`
+                : ""}
+            </h1>
           </div>
 
           <div className="text-end">
@@ -98,8 +102,6 @@ export const CaptainHome = () => {
           setOpenConfirmRidePopUpPanel={setOpenConfirmRidePopUpPanel}
         />
       </div>
-
-      
     </div>
   );
 };

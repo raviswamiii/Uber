@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import { Link } from "react-router-dom";
 import { HiMiniArrowLongLeft } from "react-icons/hi2";
 
@@ -9,7 +8,7 @@ import { FinishRide } from "../components/FininshRide";
 export const CaptainRiding = () => {
     const [finishRide, setFinishRide] = useState(false)
   return (
-    <div className="relative h-screen">
+    <div className="relative h-screen overflow-hidden">
       <img className="h-8 absolute left-4 top-3" src={uberLogo} alt="" />
       <Link to={"/CaptainHome"}>
         <HiMiniArrowLongLeft className="absolute bg-white text-4xl p-2 rounded-full right-3 top-3 rotate-180" />

@@ -1,13 +1,25 @@
-import { createContext, useState } from "react"
+import { createContext, useEffect, useState } from "react";
 
 export const CaptainContext = createContext();
+
 export const CaptainContextProvider = (props) => {
-    const [captainData, setCaptainData] = useState({});
+  const [captainData, setCaptainData] = useState({});
 
-    const value = {
-        captainData,
-        setCaptainData
+  useEffect(() => {
+    const storedCaptain = localStorage.getItem("captainData");
+    if (storedCaptain) {
+      setCaptainData(JSON.parse(storedCaptain)); 
     }
+  }, []);
 
-   return <CaptainContext.Provider value={value}>{props.children}</CaptainContext.Provider>
-}
+  const value = {
+    captainData,
+    setCaptainData,
+  };
+
+  return (
+    <CaptainContext.Provider value={value}>
+      {props.children}
+    </CaptainContext.Provider>
+  );
+};
