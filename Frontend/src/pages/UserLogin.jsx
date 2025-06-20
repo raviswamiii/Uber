@@ -5,6 +5,7 @@ import { UserContext } from "../context/UserContext";
 import axios from "axios"
 
 export const UserLogin = () => {
+  const {setUserData} = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const {backendURL} = useContext(UserContext);
@@ -25,8 +26,11 @@ export const UserLogin = () => {
     const response = await axios.post(backendURL + "/user/login", user);
 
     if(response.data.success) {
+      setUserData(response.data.user);
+      localStorage.setItem("userData", JSON.stringify(response.data.user));
       localStorage.setItem("token", response.data.token);
       navigate("/home")
+      console.log("User ",  response.data.user);
     }
     } catch (error) {
       console.log(error)

@@ -39,7 +39,7 @@ const userRegister = async (req, res) => {
 
         const token = createToken(user._id);
 
-        res.json({success: true, token});
+        res.json({success: true, token, user});
 
     } catch (error) {
         console.log(error);
@@ -62,7 +62,7 @@ const userLogin = async (req, res) => {
         if(isMatch){
             const token = createToken(user._id);
             res.cookie("token", token);
-            res.json({success: true, token})
+            res.json({success: true, token, user})
         } else{
             res.json({success: false, message: "Invalid credentials"});
         }

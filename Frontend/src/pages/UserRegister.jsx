@@ -4,6 +4,7 @@ import uberLogo from "../assets/uber-logo.png";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
 export const UserRegister = () => {
+  const { userData, setUserData } = useContext(UserContext);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -32,6 +33,8 @@ export const UserRegister = () => {
       const response = await axios.post(backendURL + "/user/register", newUser);
 
       if (response.data.success) {
+        setUserData(response.data.user);
+        localStorage.setItem("userData", JSON.stringify(response.data.user));
         localStorage.setItem("token", response.data.token);
         navigate("/home")
       } else {

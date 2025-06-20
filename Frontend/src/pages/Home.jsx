@@ -8,9 +8,11 @@ import { WaitingForDriver } from "../components/WaitingForDriver";
 import axios from "axios";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
+import { SocketContext } from "../context/SocketContext";
 
 export const Home = () => {
-  const { backendURL } = useContext(UserContext);
+  const { backendURL, userData } = useContext(UserContext);
+  const {socket} = useContext(SocketContext)
   const [openPanel, setOpenPanel] = useState(false);
   const [openVehiclePanel, setOpenVehiclePanel] = useState(false);
   const [openConfirmRidePanel, setOpenConfirmRidePanel] = useState(false);
@@ -23,6 +25,11 @@ export const Home = () => {
   const [active, setActive] = useState();
   const [fare, setFare] = useState();
   const [vehicleType, setVehicleType] = useState();
+
+ useEffect(() => {
+  console.log("Emitting join with:", userData._id);
+        socket.emit("join", { userType: "user", userId: userData._id })
+    }, [ userData ])
 
   useEffect(() => {
     if (openVehiclePanel) {
