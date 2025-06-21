@@ -13,11 +13,37 @@ export const CaptainHome = () => {
   const [openConfirmRidePopUpPanel, setOpenConfirmRidePopUpPanel] =
     useState(false);
   const { captainData } = useContext(CaptainContext);
-  const {socket} = useContext(SocketContext);
+  const { socket } = useContext(SocketContext);
 
   useEffect(() => {
-    socket.emit("join", {userType: "captain", userId: captainData._id});
-  }, [captainData]);
+    socket.emit("join", { userType: "captain", userId: captainData._id });
+
+    const updateLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          console.log({
+            userId: captainData._id,
+            location: {
+              ltd: position.coords.latitude,
+              lng: position.coords.longitude,
+            },
+          });
+          socket.emit("updateCaptainLocation", {
+            userId: captainData._id,
+            location: {
+              ltd: position.coords.latitude,
+              lng: position.coords.longitude,
+            },
+          });
+        });
+      }
+    };
+
+    const locationInterval = setInterval(updateLocation, 10000);
+    updateLocation();
+
+    // return () => clearInterval(locationInterval)
+  }, []);
 
   useEffect(() => {
     if (openConfirmRidePopUpPanel === false) {
