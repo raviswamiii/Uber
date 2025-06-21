@@ -17,8 +17,6 @@ export const CaptainHome = () => {
 
   useEffect(() => {
     socket.emit("join", {userType: "captain", userId: captainData._id});
-    console.log(captainData._id, "Captain ID");
-    console.log(captainData, "Captain Data")
   }, [captainData]);
 
   useEffect(() => {
