@@ -53,7 +53,7 @@ const createRide = async ({user, pickup, destination, vehicleType}) => {
         throw new Error("All fields are required");
     }
 
-    const fare = await getFare({pickup, destination});
+    const fare = await fareCalculation({pickup, destination});
     console.log(fare)
 
     const ride = rideModel.create({

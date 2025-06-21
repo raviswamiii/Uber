@@ -28,6 +28,8 @@ export const Home = () => {
 
  useEffect(() => {
         socket.emit("join", { userType: "user", userId: userData._id })
+        console.log(userData._id, "User ID");
+        console.log(userData, "User Data")
     }, [ userData ])
 
   useEffect(() => {

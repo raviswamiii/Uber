@@ -19,8 +19,10 @@ const initializeSocket = (server) => {
 
       if (userType === "user") {
         await userModel.findByIdAndUpdate(userId, { socketId: socket.id });
+        console.log("userId: ", userId)
       } else if (userType === "captain") {
         await captainModel.findByIdAndUpdate(userId, { socketId: socket.id });
+        console.log("captainId: ", userId)
       }
     });
 

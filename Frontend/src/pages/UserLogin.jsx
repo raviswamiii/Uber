@@ -30,7 +30,6 @@ export const UserLogin = () => {
       localStorage.setItem("userData", JSON.stringify(response.data.user));
       localStorage.setItem("token", response.data.token);
       navigate("/home")
-      console.log("User ",  response.data.user);
     }
     } catch (error) {
       console.log(error)

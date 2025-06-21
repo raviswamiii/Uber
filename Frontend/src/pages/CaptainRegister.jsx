@@ -15,7 +15,7 @@ export const CaptainRegister = () => {
   const [vehicleCapacity, setVehicleCapacity] = useState("");
   const [vehicleType, setVehicleType] = useState("");
   const { backendURL } = useContext(UserContext);
-  const {captainData, setCaptainData} = useContext(CaptainContext)
+  const { setCaptainData } = useContext(CaptainContext);
   const navigate = useNavigate();
 
   const onSubmitHandler = async (e) => {
@@ -37,8 +37,6 @@ export const CaptainRegister = () => {
         },
       };
 
-      setCaptainData(newCaptain);
-
       setFirstName("");
       setLastName("");
       setEmail("");
@@ -53,6 +51,8 @@ export const CaptainRegister = () => {
         newCaptain
       );
       if (response.data.success) {
+        setCaptainData(response.data.captain);
+        localStorage.setItem("captainData", JSON.stringify(response.data.captain));
         localStorage.setItem("token", response.data.token);
         navigate("/captainHome");
       } else {
@@ -63,7 +63,6 @@ export const CaptainRegister = () => {
     }
   };
 
-  
   return (
     <div className="relative flex flex-col h-screen justify-between p-7">
       <img className="absolute top-5 left-7 z-10 h-6" src={uberLogo} alt="" />
