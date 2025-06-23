@@ -16,8 +16,9 @@ export const CaptainHome = () => {
   const { socket } = useContext(SocketContext);
 
   useEffect(() => {
+    if (!captainData || !captainData._id || !socket) return;
     socket.emit("join", { userType: "captain", userId: captainData._id });
-
+    
     const updateLocation = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -43,7 +44,7 @@ export const CaptainHome = () => {
     updateLocation();
 
     // return () => clearInterval(locationInterval)
-  }, []);
+  }, [captainData]);
 
   useEffect(() => {
     if (openConfirmRidePopUpPanel === false) {
