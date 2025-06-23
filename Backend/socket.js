@@ -27,14 +27,14 @@ const initializeSocket = (server) => {
     socket.on("updateCaptainLocation", async (data) => {
       const { userId, location } = data;
 
-      if (!location || !location.ltd || !location.lng) {
+      if (!location || !location.lng || !location.ltd) {
         return socket.emit("error", { message: "Invalid location data" });
       }
 
       await captainModel.findByIdAndUpdate(userId, {
         location: {
-          ltd: location.ltd,
           lng: location.lng,
+          ltd: location.ltd,
         },
       });
     });
@@ -45,9 +45,9 @@ const initializeSocket = (server) => {
   });
 };
 
-const sendMessageToSocketId = (socketId, event) => {
+const sendMessageToSocketId = (socketId, messageObject) => {
   if (io) {
-    io.to(socketId).emit(event);
+    io.to(socketId).emit(messageObject.event, messageObject.data);
   } else {
     console.log(`Socket ID ${socketId} not found.`);
   }

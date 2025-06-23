@@ -11,14 +11,14 @@ const getAddressCoordinate = async (address) => {
     const features = response.data.features;
 
     if (features && features.length > 0) {
-      const [lat, lng] = features[0].center;
-      return { lat, lng };
+      const [lng, ltd] = features[0].center;
+      return { lng, ltd };
     } else {
-      throw new error("Location not found");
+      throw new Error("Location not found");
     }
   } catch (error) {
     console.log(error);
-    throw new error("Unable to fetch location");
+    throw new Error("Unable to fetch location");
   }
 };
 
@@ -88,7 +88,7 @@ const getAutoCompleteSuggestions = async (input) => {
   }
 };
 
-const getCaptainsInTheRadius = async (ltd, lng, radius) => {
+const getCaptainsInTheRadius = async (lng, ltd, radius) => {
   const captains = await captainModel.find({
     location: {
       $geoWithin: {

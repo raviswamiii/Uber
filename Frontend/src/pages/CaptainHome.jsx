@@ -26,8 +26,8 @@ export const CaptainHome = () => {
           socket.emit("updateCaptainLocation", {
             userId: captainData._id,
             location: {
-              ltd: position.coords.latitude,
               lng: position.coords.longitude,
+              ltd: position.coords.latitude,
             },
           });
         });
@@ -39,6 +39,10 @@ export const CaptainHome = () => {
 
     // return () => clearInterval(locationInterval)
   }, [captainData]);
+
+  socket.on("newRide", (data) => {
+    console.log(data)
+  })
 
   useEffect(() => {
     if (openConfirmRidePopUpPanel === false) {
