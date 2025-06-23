@@ -22,13 +22,7 @@ export const CaptainHome = () => {
     const updateLocation = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
-          console.log({
-            userId: captainData._id,
-            location: {
-              ltd: position.coords.latitude,
-              lng: position.coords.longitude,
-            },
-          });
+        
           socket.emit("updateCaptainLocation", {
             userId: captainData._id,
             location: {
