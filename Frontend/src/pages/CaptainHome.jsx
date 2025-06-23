@@ -14,6 +14,7 @@ export const CaptainHome = () => {
     useState(false);
   const { captainData } = useContext(CaptainContext);
   const { socket } = useContext(SocketContext);
+  const [ride, setRide] = useState(null);
 
   useEffect(() => {
     if (!captainData || !captainData._id || !socket) return;
@@ -41,8 +42,12 @@ export const CaptainHome = () => {
   }, [captainData]);
 
   socket.on("newRide", (data) => {
-    console.log(data)
+    setRide(data);
+    setOpenRidePopUpPanel(true);
+
   })
+
+
 
   useEffect(() => {
     if (openConfirmRidePopUpPanel === false) {
@@ -50,12 +55,11 @@ export const CaptainHome = () => {
     }
   }, [openConfirmRidePopUpPanel]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setOpenRidePopUpPanel(true);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //   }, 1000);
+  //   return () => clearTimeout(timer);
+  // }, []);
   return (
     <div className="relative h-screen overflow-hidden">
       <img className="h-8 absolute left-4 top-3" src={uberLogo} alt="" />
@@ -120,6 +124,7 @@ export const CaptainHome = () => {
         <RidePopUp
           setOpenRidePopUpPanel={setOpenRidePopUpPanel}
           setOpenConfirmRidePopUpPanel={setOpenConfirmRidePopUpPanel}
+          ride={ride}
         />
       </div>
 
