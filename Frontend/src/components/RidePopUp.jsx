@@ -3,7 +3,12 @@ import { FaLocationDot } from "react-icons/fa6";
 import { BsCash } from "react-icons/bs";
 import { RiUserLocationFill } from "react-icons/ri";
 
-export const RidePopUp = ({setOpenRidePopUpPanel, setOpenConfirmRidePopUpPanel, ride}) => {
+export const RidePopUp = ({
+  setOpenRidePopUpPanel,
+  setOpenConfirmRidePopUpPanel,
+  ride,
+  confirm,
+}) => {
   return (
     <div className="py-4 px-2">
       <div className="flex">
@@ -19,7 +24,9 @@ export const RidePopUp = ({setOpenRidePopUpPanel, setOpenConfirmRidePopUpPanel, 
               alt=""
             />
           </div>
-          <h1 className="text-lg font-semibold">{ride?.user.fullName.firstName + " " + ride?.user.fullName.lastName}</h1>
+          <h1 className="text-lg font-semibold">
+            {ride?.user.fullName.firstName + " " + ride?.user.fullName.lastName}
+          </h1>
         </div>
         <h2 className="font-semibold">2.2KM</h2>
       </div>
@@ -49,10 +56,19 @@ export const RidePopUp = ({setOpenRidePopUpPanel, setOpenConfirmRidePopUpPanel, 
           </div>
         </div>
       </div>
-      <button onClick={()=>setOpenConfirmRidePopUpPanel(true)} className="bg-green-600 w-full text-white font-semibold rounded-md py-2 mt-5">
+      <button
+        onClick={() => {
+          setOpenConfirmRidePopUpPanel(true);
+          confirm();
+        }}
+        className="bg-green-600 w-full text-white font-semibold rounded-md py-2 mt-5"
+      >
         Accept
       </button>
-      <button onClick={()=>setOpenRidePopUpPanel(false)} className="bg-gray-300 w-full text-black font-semibold rounded-md py-2 mt-2">
+      <button
+        onClick={() => setOpenRidePopUpPanel(false)}
+        className="bg-gray-300 w-full text-black font-semibold rounded-md py-2 mt-2"
+      >
         Ignore
       </button>
     </div>

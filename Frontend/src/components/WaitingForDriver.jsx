@@ -4,7 +4,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { BsCash } from "react-icons/bs";
 import { RiUserLocationFill } from "react-icons/ri";
 
-export const WaitingForDriver = ({setWaitingDriverPanel}) => {
+export const WaitingForDriver = ({setWaitingDriverPanel, ride}) => {
   return (
     <div className="relative py-4 px-2">
       <div className="absolute top-0 w-full flex justify-center">

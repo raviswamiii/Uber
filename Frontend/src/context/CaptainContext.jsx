@@ -4,7 +4,8 @@ export const CaptainContext = createContext();
 
 export const CaptainContextProvider = (props) => {
   const [captainData, setCaptainData] = useState(null);
-
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  
   useEffect(() => {
     const storedCaptain = localStorage.getItem("captainData");
     if (storedCaptain) {
@@ -15,6 +16,7 @@ export const CaptainContextProvider = (props) => {
   const value = {
     captainData,
     setCaptainData,
+    backendURL,
   };
 
   return (

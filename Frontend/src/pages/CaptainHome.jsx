@@ -7,23 +7,23 @@ import { RidePopUp } from "../components/RidePopUp";
 import { ConfirmRidePopUp } from "../components/ConfirmRidePopUp";
 import { CaptainContext } from "../context/CaptainContext";
 import { SocketContext } from "../context/SocketContext";
+import axios from "axios";
 
 export const CaptainHome = () => {
   const [openRidePopUpPanel, setOpenRidePopUpPanel] = useState(false);
   const [openConfirmRidePopUpPanel, setOpenConfirmRidePopUpPanel] =
     useState(false);
-  const { captainData } = useContext(CaptainContext);
+  const { captainData, backendURL } = useContext(CaptainContext);
   const { socket } = useContext(SocketContext);
   const [ride, setRide] = useState(null);
 
   useEffect(() => {
     if (!captainData || !captainData._id || !socket) return;
     socket.emit("join", { userType: "captain", userId: captainData._id });
-    
+
     const updateLocation = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
-        
           socket.emit("updateCaptainLocation", {
             userId: captainData._id,
             location: {
@@ -44,10 +44,7 @@ export const CaptainHome = () => {
   socket.on("newRide", (data) => {
     setRide(data);
     setOpenRidePopUpPanel(true);
-
-  })
-
-
+  });
 
   useEffect(() => {
     if (openConfirmRidePopUpPanel === false) {
@@ -55,11 +52,26 @@ export const CaptainHome = () => {
     }
   }, [openConfirmRidePopUpPanel]);
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //   }, 1000);
-  //   return () => clearTimeout(timer);
-  // }, []);
+  const confirmRide = async () => {
+    try {
+      const response = await axios.post(
+        backendURL + "/rides/confirm",
+        { rideId: ride?._id, captainId: captainData._id },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log("✅ Confirmed ride:", response.data);
+    } catch (err) {
+      console.error(
+        "❌ Error confirming ride:",
+        err.response?.data || err.message
+      );
+    }
+  };
+
   return (
     <div className="relative h-screen overflow-hidden">
       <img className="h-8 absolute left-4 top-3" src={uberLogo} alt="" />
@@ -125,6 +137,7 @@ export const CaptainHome = () => {
           setOpenRidePopUpPanel={setOpenRidePopUpPanel}
           setOpenConfirmRidePopUpPanel={setOpenConfirmRidePopUpPanel}
           ride={ride}
+          confirm={confirmRide}
         />
       </div>
 

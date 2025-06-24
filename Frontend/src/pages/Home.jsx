@@ -12,7 +12,7 @@ import { SocketContext } from "../context/SocketContext";
 
 export const Home = () => {
   const { backendURL, userData } = useContext(UserContext);
-  const {socket} = useContext(SocketContext)
+  const { socket } = useContext(SocketContext);
   const [openPanel, setOpenPanel] = useState(false);
   const [openVehiclePanel, setOpenVehiclePanel] = useState(false);
   const [openConfirmRidePanel, setOpenConfirmRidePanel] = useState(false);
@@ -25,10 +25,19 @@ export const Home = () => {
   const [active, setActive] = useState();
   const [fare, setFare] = useState();
   const [vehicleType, setVehicleType] = useState();
+  const [ride, setRide] = useState(null);
 
- useEffect(() => {
-        socket.emit("join", { userType: "user", userId: userData._id })
-    }, [ userData ])
+  useEffect(() => {
+    if (!userData) return;
+    socket.emit("join", { userType: "user", userId: userData._id });
+    console.log("Socket connected for user:", userData._id);
+  }, [userData]);
+
+  socket.on("rideConfirmed", (data) => {
+    setRide(data);
+    console.log("Ride confirmed:", data);
+    setWaitingDriverPanel(true);
+  })
 
   useEffect(() => {
     if (openVehiclePanel) {
@@ -53,15 +62,6 @@ export const Home = () => {
       setLookingDriverPanel(false);
     }
   }, [waitingDriverPanel]);
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     if (lookingDriverPanel) {
-  //       setWaitingDriverPanel(true);
-  //     }
-  //   }, 1000);
-  //   return () => clearTimeout(timer);
-  // });
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -125,6 +125,8 @@ export const Home = () => {
       console.log(error);
     }
   };
+
+  
 
   return (
     <div className="relative h-screen w-full overflow-hidden">
@@ -311,7 +313,7 @@ export const Home = () => {
           waitingDriverPanel ? "translate-y-0" : "translate-y-full"
         }`}
       >
-        <WaitingForDriver setWaitingDriverPanel={setWaitingDriverPanel} />
+        <WaitingForDriver setWaitingDriverPanel={setWaitingDriverPanel} ride={ride} />
       </div>
     </div>
   );
