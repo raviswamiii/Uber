@@ -77,7 +77,6 @@ const confirmRides = async (req, res) => {
 
   try {
     const ride = await confirmRide({ rideId, captainId });
-    console.log("Emitting to user socketId:", ride.user.socketId);
 
     sendMessageToSocketId(ride.user.socketId, {
       event: "rideConfirmed",

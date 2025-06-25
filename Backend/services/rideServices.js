@@ -80,26 +80,22 @@ const createRide = async ({ user, pickup, destination, vehicleType }) => {
   return ride;
 };
 
-const confirmRide = async ({ rideId, captain }) => {
-    console.log("📥 confirmRide called with:", rideId, captain?._id);
+const confirmRide = async ({ rideId, captainId }) => {
+
   if (!rideId) {
     throw new Error("Ride id is required");
   }
 
   await rideModel.findOneAndUpdate(
-    {
-      _id: rideId,
-    },
+    { _id: rideId },
     {
       status: "accepted",
-      captain: captain._id,
+      captain: captainId,
     }
   );
 
   const ride = await rideModel
-    .findOne({
-      _id: rideId,
-    })
+    .findOne({ _id: rideId })
     .populate("user")
     .populate("captain")
     .select("+otp");
@@ -110,5 +106,6 @@ const confirmRide = async ({ rideId, captain }) => {
 
   return ride;
 };
+
 
 module.exports = { fareCalculation, createRide, confirmRide };

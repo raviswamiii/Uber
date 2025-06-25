@@ -30,14 +30,18 @@ export const Home = () => {
   useEffect(() => {
     if (!userData) return;
     socket.emit("join", { userType: "user", userId: userData._id });
-    console.log("Socket connected for user:", userData._id);
   }, [userData]);
 
-  socket.on("rideConfirmed", (data) => {
-    setRide(data);
-    console.log("Ride confirmed:", data);
-    setWaitingDriverPanel(true);
-  })
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.on("rideConfirmed", (data) => {
+      setRide(data);
+      setWaitingDriverPanel(true);
+    });
+
+    return () => socket.off("rideConfirmed"); // clean up
+  }, [socket]);
 
   useEffect(() => {
     if (openVehiclePanel) {
@@ -125,8 +129,6 @@ export const Home = () => {
       console.log(error);
     }
   };
-
-  
 
   return (
     <div className="relative h-screen w-full overflow-hidden">
@@ -305,6 +307,10 @@ export const Home = () => {
         <LookingForDriver
           setLookingDriverPanel={setLookingDriverPanel}
           setWaitingDriverPanel={setWaitingDriverPanel}
+          pickup={pickup}
+          destination={destination}
+          fare={fare}
+          vehicleType={vehicleType}
         />
       </div>
 
@@ -313,7 +319,12 @@ export const Home = () => {
           waitingDriverPanel ? "translate-y-0" : "translate-y-full"
         }`}
       >
-        <WaitingForDriver setWaitingDriverPanel={setWaitingDriverPanel} ride={ride} />
+        {ride && (
+          <WaitingForDriver
+            setWaitingDriverPanel={setWaitingDriverPanel}
+            ride={ride}
+          />
+        )}
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import { BsCash } from "react-icons/bs";
 import { RiUserLocationFill } from "react-icons/ri";
 
 export const WaitingForDriver = ({setWaitingDriverPanel, ride}) => {
+
   return (
     <div className="relative py-4 px-2">
       <div className="absolute top-0 w-full flex justify-center">
@@ -20,9 +21,9 @@ export const WaitingForDriver = ({setWaitingDriverPanel, ride}) => {
         />
 
         <div className="text-end">
-          <h1 className="text-lg font-semibold">Vishal Saini</h1>
-          <h2 className="text-xl font-semibold leading-3 mb-1">RJ14 AB 1234</h2>
-          <h3 className="text-sm text-gray-800">Maruti Suzuki Alto</h3>
+          <h1 className="text-lg font-semibold capitalize">{ride.captain?.fullName?.firstName + " " +ride.captain?.fullName?.lastName}</h1>
+          <h2 className="text-xl font-normal leading-4">{ride.captain?.vehicle?.plate}</h2>
+          <h3 className="text-base font-normal capitalize">{ride.captain?.vehicle?.vehicleType}</h3>
         </div>
       </div>
 
@@ -32,20 +33,20 @@ export const WaitingForDriver = ({setWaitingDriverPanel, ride}) => {
 
           <div>
             <h2 className="text-xl font-semibold leading-5">563/11-A</h2>
-            <p className="text-sm text-gray-800">Jalmahal, Jaipur</p>
+            <p className="text-sm text-gray-800">{ride.pickup}</p>
           </div>
         </div>
         <div className="flex items-center border-bottom gap-4 p-2 border-t border-gray-400">
           <FaLocationDot className="h-4" />
           <div>
             <h2 className="text-xl font-semibold leading-5">563/11-A</h2>
-            <p className="text-sm text-gray-800">Jalmahal, Jaipur</p>
+            <p className="text-sm text-gray-800">{ride.destination}</p>
           </div>
         </div>
         <div className="flex items-center border-bottom gap-4 p-2 border-t border-gray-400">
           <BsCash className="h-4" />
           <div>
-            <h2 className="text-xl font-semibold leading-5">₹193.20</h2>
+            <h2 className="text-xl font-semibold leading-5">₹{ride.fare}</h2>
             <p className="text-sm text-gray-800">Cash Cash</p>
           </div>
         </div>

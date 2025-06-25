@@ -63,10 +63,9 @@ export const CaptainHome = () => {
           },
         }
       );
-      console.log("✅ Confirmed ride:", response.data);
     } catch (err) {
       console.error(
-        "❌ Error confirming ride:",
+        "Error confirming ride:",
         err.response?.data || err.message
       );
     }
