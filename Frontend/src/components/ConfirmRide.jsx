@@ -10,7 +10,8 @@ export const ConfirmRide = ({
   pickup, 
   destination,
   fare,
-  vehicleType
+  vehicleType,
+  createRide
 }) => {
   return (
     <div className="py-4 px-2">
@@ -56,7 +57,7 @@ export const ConfirmRide = ({
         </div>
       </div>
       <button
-        onClick={() => setLookingDriverPanel(true)}
+        onClick={() => {setLookingDriverPanel(true); createRide()}}
         className="bg-green-600 w-full text-white font-semibold rounded-md py-2 mt-2"
       >
         Confirm

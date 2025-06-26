@@ -38,6 +38,7 @@ export const Home = () => {
     socket.on("rideConfirmed", (data) => {
       setRide(data);
       setWaitingDriverPanel(true);
+      console.log(data)
     });
 
     return () => socket.off("rideConfirmed"); // clean up
@@ -129,6 +130,18 @@ export const Home = () => {
       console.log(error);
     }
   };
+
+  const createRide = async () => {
+    const response = await axios.post(backendURL + "/rides/createRides", {
+      pickup,
+      destination,
+      vehicleType
+    }, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      }
+    })
+  }
 
   return (
     <div className="relative h-screen w-full overflow-hidden">
@@ -296,6 +309,7 @@ export const Home = () => {
           destination={destination}
           fare={fare}
           vehicleType={vehicleType}
+          createRide={createRide}
         />
       </div>
 

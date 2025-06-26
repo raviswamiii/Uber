@@ -21,9 +21,10 @@ export const WaitingForDriver = ({setWaitingDriverPanel, ride}) => {
         />
 
         <div className="text-end">
-          <h1 className="text-lg font-semibold capitalize">{ride.captain?.fullName?.firstName + " " +ride.captain?.fullName?.lastName}</h1>
-          <h2 className="text-xl font-normal leading-4">{ride.captain?.vehicle?.plate}</h2>
-          <h3 className="text-base font-normal capitalize">{ride.captain?.vehicle?.vehicleType}</h3>
+          <h1 className="text-lg font-semibold capitalize leading-4">{ride.captain?.fullName?.firstName + " " + ride.captain?.fullName?.lastName}</h1>
+          <h2 className="text-xl font-semibold">{ride.captain?.vehicle?.plate}</h2>
+          <h3 className="text-lg font-semibold capitalize leading-4">{ride.captain?.vehicle?.vehicleType}</h3>
+          <h3 className="text-lg font-semibold capitalize">{ride.otp}</h3>
         </div>
       </div>
 
