@@ -9,6 +9,7 @@ import axios from "axios";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { SocketContext } from "../context/SocketContext";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
   const { backendURL, userData } = useContext(UserContext);
@@ -26,6 +27,7 @@ export const Home = () => {
   const [fare, setFare] = useState();
   const [vehicleType, setVehicleType] = useState();
   const [ride, setRide] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!userData) return;
@@ -38,7 +40,6 @@ export const Home = () => {
     socket.on("rideConfirmed", (data) => {
       setRide(data);
       setWaitingDriverPanel(true);
-      console.log(data)
     });
 
     return () => socket.off("rideConfirmed"); // clean up
@@ -132,7 +133,8 @@ export const Home = () => {
   };
 
   const createRide = async () => {
-    const response = await axios.post(backendURL + "/rides/createRides", {
+    try {
+      const response = await axios.post(backendURL + "/rides/createRides", {
       pickup,
       destination,
       vehicleType
@@ -141,7 +143,26 @@ export const Home = () => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       }
     })
+    } catch (error) {
+      console.error(
+        "Error confirming ride:",
+        err.response?.data || err.message
+      );
+    }
   }
+
+ useEffect(() => {
+  if (!socket) return;
+
+  socket.on("rideStarted", (data) => {
+    console.log("Ride started:", data);
+    setRide(data);
+    setWaitingDriverPanel(false);
+    navigate("/riding", { state: { ride: data } });
+  });
+
+}, [socket, navigate]);
+
 
   return (
     <div className="relative h-screen w-full overflow-hidden">

@@ -38,7 +38,6 @@ export const CaptainHome = () => {
     const locationInterval = setInterval(updateLocation, 10000);
     updateLocation();
 
-    // return () => clearInterval(locationInterval)
   }, [captainData]);
 
   socket.on("newRide", (data) => {
@@ -136,7 +135,7 @@ export const CaptainHome = () => {
           setOpenRidePopUpPanel={setOpenRidePopUpPanel}
           setOpenConfirmRidePopUpPanel={setOpenConfirmRidePopUpPanel}
           ride={ride}
-          confirm={confirmRide}
+          confirmRide={confirmRide}
         />
       </div>
 
@@ -147,6 +146,7 @@ export const CaptainHome = () => {
       >
         <ConfirmRidePopUp
           setOpenConfirmRidePopUpPanel={setOpenConfirmRidePopUpPanel}
+          ride={ride}
         />
       </div>
     </div>

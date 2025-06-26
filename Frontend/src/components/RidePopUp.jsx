@@ -7,7 +7,7 @@ export const RidePopUp = ({
   setOpenRidePopUpPanel,
   setOpenConfirmRidePopUpPanel,
   ride,
-  confirm,
+  confirmRide,
 }) => {
   return (
     <div className="py-4 px-2">
@@ -59,7 +59,7 @@ export const RidePopUp = ({
       <button
         onClick={() => {
           setOpenConfirmRidePopUpPanel(true);
-          confirm();
+          confirmRide();
         }}
         className="bg-green-600 w-full text-white font-semibold rounded-md py-2 mt-5"
       >

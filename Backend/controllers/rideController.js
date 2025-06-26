@@ -90,4 +90,27 @@ const confirmRides = async (req, res) => {
   }
 };
 
-module.exports = { createRides, getFare, confirmRides };
+ const startRides = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { rideId, otp } = req.query;
+
+    try {
+        const ride = await startRides({ rideId, otp, captain: req.captain });
+
+        console.log(ride);
+
+        sendMessageToSocketId(ride.user.socketId, {
+            event: 'rideStarted',
+            data: ride
+        })
+
+        return res.status(200).json(ride);
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+}
+module.exports = { createRides, getFare, confirmRides, startRides };
