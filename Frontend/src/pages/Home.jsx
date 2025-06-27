@@ -10,6 +10,7 @@ import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { SocketContext } from "../context/SocketContext";
 import { useNavigate } from "react-router-dom";
+import LiveTrackingMapbox from "../components/LiveTrackingMapbox";
 
 export const Home = () => {
   const { backendURL, userData } = useContext(UserContext);
@@ -169,11 +170,12 @@ export const Home = () => {
       <img className="h-8 absolute left-4 top-3" src={uberLogo} alt="" />
 
       <div className="h-screen w-full">
-        <img
+        {/* <img
           className="h-full w-full object-cover"
           src="https://miro.medium.com/max/1280/0*gwMx05pqII5hbfmX.gif"
           alt=""
-        />
+        /> */}
+        <LiveTrackingMapbox/>
         <div className=" bg-white w-full  absolute bottom-0">
           <form
             onSubmit={onSubmitHandler}

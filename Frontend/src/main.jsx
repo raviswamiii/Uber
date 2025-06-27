@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { UserContextProvider } from "./context/UserContext.jsx";
 import { CaptainContextProvider } from "./context/CaptainContext.jsx";
 import { SocketContextProvider } from "./context/SocketContext.jsx";
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
