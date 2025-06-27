@@ -46,7 +46,7 @@ rideRouter.post(
 rideRouter.get('/startRide',
     captainAuth,
     query('rideId').isMongoId().withMessage('Invalid ride id'),
-    query('otp').isString().isLength({ min: 6, max: 6 }).withMessage('Invalid OTP'),
+    query('otp').isString().isLength({ min: 4, max: 4 }).withMessage('Invalid OTP'),
     startRides
 )
 module.exports = rideRouter;

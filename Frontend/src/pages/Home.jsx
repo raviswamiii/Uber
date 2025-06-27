@@ -155,13 +155,13 @@ export const Home = () => {
   if (!socket) return;
 
   socket.on("rideStarted", (data) => {
-    console.log("Ride started:", data);
     setRide(data);
     setWaitingDriverPanel(false);
     navigate("/riding", { state: { ride: data } });
   });
 
-}, [socket, navigate]);
+  return () => socket.off("rideStarted");
+}, [socket]);
 
 
   return (

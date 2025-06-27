@@ -2,9 +2,11 @@ import React from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { BsCash } from "react-icons/bs";
 import { GoHome } from "react-icons/go";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export const Riding = () => {
+  const location = useLocation();
+  const ride = location.state?.ride;
   return (
     <div className=" relative h-screen">
       <Link to={"/home"}>
@@ -27,11 +29,11 @@ export const Riding = () => {
           />
 
           <div className="text-end">
-            <h1 className="text-lg font-semibold">Vishal Saini</h1>
-            <h2 className="text-xl font-semibold leading-3 mb-1">
-              RJ14 AB 1234
+            <h1 className="text-lg font-semibold">{ride?.captain.fullName.firstName + " " + ride?.captain.fullName.lastName}</h1>
+            <h2 className="text-xl font-semibold leading-3">
+              {ride?.captain.vehicle.plate}
             </h2>
-            <h3 className="text-sm text-gray-800">Maruti Suzuki Alto</h3>
+            <h3 className="text-xl leading-5">{ride?.captain.vehicle.vehicleType}</h3>
           </div>
         </div>
 
@@ -40,13 +42,13 @@ export const Riding = () => {
             <FaLocationDot className="h-4" />
             <div>
               <h2 className="text-xl font-semibold leading-5">563/11-A</h2>
-              <p className="text-sm text-gray-800">Jalmahal, Jaipur</p>
+              <p className="text-sm text-gray-800">{ride?.destination}</p>
             </div>
           </div>
           <div className="flex items-center border-bottom gap-4 py-4 px-2 border-t border-gray-400">
             <BsCash className="h-4" />
             <div>
-              <h2 className="text-xl font-semibold leading-5">₹193.20</h2>
+              <h2 className="text-xl font-semibold leading-5">₹{ride?.fare}</h2>
               <p className="text-sm text-gray-800">Cash Cash</p>
             </div>
           </div>

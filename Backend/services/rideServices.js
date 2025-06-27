@@ -67,7 +67,6 @@ const createRide = async ({ user, pickup, destination, vehicleType }) => {
   }
 
   const fare = await fareCalculation({ pickup, destination });
-  console.log(fare);
 
   const ride = rideModel.create({
     user,
@@ -107,13 +106,13 @@ const confirmRide = async ({ rideId, captainId }) => {
   return ride;
 };
 
-  const startRide = async ({ rideId, otp, captain }) => {
+  const startRide = async ({ rideId, otp }) => {
     if (!rideId || !otp) {
         throw new Error('Ride id and OTP are required');
     }
 
     const ride = await rideModel.findOne({
-        _id: rideId
+        _id: rideId,
     }).populate('user').populate('captain').select('+otp');
 
     if (!ride) {

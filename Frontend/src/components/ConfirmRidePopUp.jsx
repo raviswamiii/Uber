@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { BsCash } from "react-icons/bs";
 import { RiUserLocationFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserContext } from "../context/UserContext";
 
 export const ConfirmRidePopUp = ({ setOpenConfirmRidePopUpPanel, ride }) => {
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
+  const {backendURL} = useContext(UserContext);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-
-    const response = await axios.get(
-      `${import.meta.env.VITE_BASE_URL}/rides/startRide`,
+    const response = await axios.get(backendURL + `/rides/startRide`,
       {
         params: {
           rideId: ride._id,

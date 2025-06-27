@@ -1,5 +1,5 @@
 const { validationResult } = require("express-validator");
-const { createRide, fareCalculation, confirmRide } = require("../services/rideServices");
+const { createRide, fareCalculation, confirmRide, startRide } = require("../services/rideServices");
 const {
   getCaptainsInTheRadius,
   getAddressCoordinate,
@@ -99,9 +99,7 @@ const confirmRides = async (req, res) => {
     const { rideId, otp } = req.query;
 
     try {
-        const ride = await startRides({ rideId, otp, captain: req.captain });
-
-        console.log(ride);
+        const ride = await startRide({ rideId, otp });
 
         sendMessageToSocketId(ride.user.socketId, {
             event: 'rideStarted',
