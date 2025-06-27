@@ -4,7 +4,7 @@ import { BsCash } from "react-icons/bs";
 import { RiUserLocationFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
-export const FinishRide = ({ setOpenConfirmRidePopUpPanel }) => {
+export const FinishRide = ({ setOpenConfirmRidePopUpPanel, ride }) => {
   return (
     <div className="py-4 px-2">
       <div className="flex">
@@ -20,7 +20,7 @@ export const FinishRide = ({ setOpenConfirmRidePopUpPanel }) => {
               alt=""
             />
           </div>
-          <h1 className="text-lg font-semibold">Kajol</h1>
+          <h1 className="text-lg font-semibold">{ride?.user.fullName.firstName + " " + ride?.user.fullName.lastName}</h1>
         </div>
         <h2 className="font-semibold">2.2KM</h2>
       </div>
@@ -31,21 +31,21 @@ export const FinishRide = ({ setOpenConfirmRidePopUpPanel }) => {
 
           <div>
             <h2 className="text-xl font-semibold leading-5">563/11-A</h2>
-            <p className="text-sm text-gray-800">Jalmahal, Jaipur</p>
+            <p className="text-sm text-gray-800">{ride?.pickup}</p>
           </div>
         </div>
         <div className="flex items-center border-bottom gap-4 p-2 border-t border-gray-400">
           <FaLocationDot className="h-4" />
           <div>
             <h2 className="text-xl font-semibold leading-5">563/11-A</h2>
-            <p className="text-sm text-gray-800">Jalmahal, Jaipur</p>
+            <p className="text-sm text-gray-800">{ride?.destination}</p>
           </div>
         </div>
         <div className="flex items-center border-bottom gap-4 p-2 border-t border-gray-400">
           <BsCash className="h-4" />
 
           <div>
-            <h2 className="text-xl font-semibold leading-5">₹193.20</h2>
+            <h2 className="text-xl font-semibold leading-5">₹{ride?.fare}</h2>
             <p className="text-sm text-gray-800">Cash Cash</p>
           </div>
         </div>

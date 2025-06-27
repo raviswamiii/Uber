@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { HiMiniArrowLongLeft } from "react-icons/hi2";
 
 import uberLogo from "../assets/uber-logo.png";
 import { FinishRide } from "../components/FininshRide";
 
 export const CaptainRiding = () => {
-    const [finishRide, setFinishRide] = useState(false)
+    const [finishRide, setFinishRide] = useState(false);
+    const location = useLocation();
+    const ride = location.state?.ride;
   return (
     <div className="relative h-screen overflow-hidden">
       <img className="h-8 absolute left-4 top-3" src={uberLogo} alt="" />
@@ -35,6 +37,7 @@ export const CaptainRiding = () => {
         }`}
       >
         <FinishRide
+        ride={ride}
         />
       </div>
     </div>
