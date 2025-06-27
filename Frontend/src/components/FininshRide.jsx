@@ -1,10 +1,32 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { BsCash } from "react-icons/bs";
 import { RiUserLocationFill } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
+import axios from "axios";
+import { CaptainContext } from "../context/CaptainContext";
 
 export const FinishRide = ({ setOpenConfirmRidePopUpPanel, ride }) => {
+   const navigate = useNavigate();
+   const {backendURL, captainData} = useContext(CaptainContext);
+
+    const endRide = async () => {
+        const response = await axios.post(backendURL + `/rides/endRide`, {
+            rideId: ride._id,
+            captainId : captainData._id
+        }, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+
+        if (response.status === 200) {
+            navigate('/captainHome')
+        }
+
+    }
+
   return (
     <div className="py-4 px-2">
       <div className="flex">
@@ -50,11 +72,9 @@ export const FinishRide = ({ setOpenConfirmRidePopUpPanel, ride }) => {
           </div>
         </div>
       </div>
-      <Link to={"/captainHome"}>
-        <button className="bg-green-500 w-full text-white font-semibold rounded-md py-2 mt-14">
+        <button onClick={endRide} className="bg-green-500 w-full text-white font-semibold rounded-md py-2 mt-14">
           Finish Ride
         </button>
-      </Link>
     </div>
   );
 };

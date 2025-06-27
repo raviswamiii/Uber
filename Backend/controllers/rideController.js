@@ -1,5 +1,5 @@
 const { validationResult } = require("express-validator");
-const { createRide, fareCalculation, confirmRide, startRide } = require("../services/rideServices");
+const { createRide, fareCalculation, confirmRide, startRide, endRide } = require("../services/rideServices");
 const {
   getCaptainsInTheRadius,
   getAddressCoordinate,
@@ -111,4 +111,25 @@ const confirmRides = async (req, res) => {
         return res.status(500).json({ message: err.message });
     }
 }
-module.exports = { createRides, getFare, confirmRides, startRides };
+
+ const endRides = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { rideId, captainId } = req.body;
+
+    try {
+        const ride = await endRide({ rideId, captainId });
+
+        sendMessageToSocketId(ride.user.socketId, {
+            event: 'rideEnded',
+            data: ride
+        })
+        return res.status(200).json(ride);
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    } 
+}
+module.exports = { createRides, getFare, confirmRides, startRides, endRides };

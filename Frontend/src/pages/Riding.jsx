@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { BsCash } from "react-icons/bs";
 import { GoHome } from "react-icons/go";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { SocketContext } from "../context/SocketContext";
 
 export const Riding = () => {
   const location = useLocation();
   const ride = location.state?.ride;
+  const navigate = useNavigate();
+  const {socket} = useContext(SocketContext);
+
+    useEffect(() => {
+        if (!socket) return;
+        socket.on("rideEnded", () => {
+        navigate('/home')
+    })
+        return () => socket.off("rideEnded");
+      }, [socket]);
+
   return (
     <div className=" relative h-screen">
       <Link to={"/home"}>

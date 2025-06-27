@@ -42,7 +42,7 @@ export const Home = () => {
       setWaitingDriverPanel(true);
     });
 
-    return () => socket.off("rideConfirmed"); // clean up
+    return () => socket.off("rideConfirmed"); 
   }, [socket]);
 
   useEffect(() => {
