@@ -21,7 +21,6 @@ const LiveTrackingMapbox = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          console.log("Initial Position:", latitude, longitude);
           setCurrentPosition({ lat: latitude, lng: longitude });
           setViewState((prev) => ({
             ...prev,
