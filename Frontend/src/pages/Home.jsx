@@ -176,7 +176,7 @@ export const Home = () => {
           alt=""
         /> */}
         <LiveTrackingMapbox/>
-        <div className=" bg-white w-full  absolute bottom-0">
+        <div className=" bg-white w-full absolute bottom-0 ">
           <form
             onSubmit={onSubmitHandler}
             className="flex flex-col p-3 gap-3 h-[25vh] relative"

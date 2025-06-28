@@ -8,6 +8,7 @@ import { ConfirmRidePopUp } from "../components/ConfirmRidePopUp";
 import { CaptainContext } from "../context/CaptainContext";
 import { SocketContext } from "../context/SocketContext";
 import axios from "axios";
+import LiveTrackingMapbox from "../components/LiveTrackingMapbox";
 
 export const CaptainHome = () => {
   const [openRidePopUpPanel, setOpenRidePopUpPanel] = useState(false);
@@ -75,11 +76,12 @@ export const CaptainHome = () => {
       <img className="h-8 absolute left-4 top-3" src={uberLogo} alt="" />
 
       <div className="h-[70%] overflow-hidden">
-        <img
+        {/* <img
           className="h-full w-full object-cover"
           src="https://miro.medium.com/max/1280/0*gwMx05pqII5hbfmX.gif"
           alt=""
-        />
+        /> */}
+        <LiveTrackingMapbox/>
       </div>
 
       <div className="h-[30%] overflow-hidden p-4 bg-white w-full">
