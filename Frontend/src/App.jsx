@@ -1,10 +1,10 @@
 import React from "react";
 import { Home } from "./pages/Home";
 import { Start } from "./pages/Start";
-import { UserLogin } from "./pages/userLogin";
-import { UserRegister } from "./pages/userRegister";
-import { CaptainLogin } from "./pages/captainLogin";
-import { CaptainRegister } from "./pages/captainRegister";
+import { UserLogin } from "./pages/UserLogin";
+import { UserRegister } from "./pages/UserRegister";
+import { CaptainLogin } from "./pages/CaptainLogin";
+import { CaptainRegister } from "./pages/CaptainRegister";
 import { Route, Routes } from "react-router-dom";
 import { UserProtectedWrapper } from "./pages/UserProtectedWrapper";
 import { UserLogout } from "./pages/UserLogout";
