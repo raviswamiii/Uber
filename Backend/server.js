@@ -15,8 +15,13 @@ const { initializeSocket } = require("./socket");
 
 dotenv.config();
 
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true
+}));
+
 databaseConnection();
-app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
