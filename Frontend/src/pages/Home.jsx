@@ -147,7 +147,7 @@ export const Home = () => {
     } catch (error) {
       console.error(
         "Error confirming ride:",
-        err.response?.data || err.message
+        error.response?.data || error.message
       );
     }
   }
