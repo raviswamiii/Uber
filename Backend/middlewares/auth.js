@@ -7,13 +7,12 @@ const userAuth = async (req, res, next) => {
   const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
 
   if (!token) {
-    return res.json({ success: false, message: "token not found" });
+    return res.status(401).json({ success: false, message: "Token not found" });
   }
 
-  const isBlackListToken = await blackListToken.findOne({ token: token });
-
+  const isBlackListToken = await blackListToken.findOne({ token });
   if (isBlackListToken) {
-    return res.json({ message: "Black listed token" });
+    return res.status(401).json({ success: false, message: "Blacklisted token" });
   }
 
   try {
@@ -21,13 +20,14 @@ const userAuth = async (req, res, next) => {
     const user = await userModel.findById(decoded.id);
 
     if (!user) {
-      return res.status(401).json({ message: "User not found" });
+      return res.status(401).json({ success: false, message: "User not found" });
     }
+
     req.user = user;
     next();
   } catch (error) {
-    console.log(error);
-    res.json({ success: false, message: error.message });
+    console.error("userAuth error:", error);
+    return res.status(401).json({ success: false, message: "Unauthorized" });
   }
 };
 
@@ -35,13 +35,12 @@ const captainAuth = async (req, res, next) => {
   const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
 
   if (!token) {
-    return res.json({ message: "Unauthorized" });
+    return res.status(401).json({ success: false, message: "Token not found" });
   }
 
-  const isBlackListToken = await blackListToken.findOne({ token: token });
-
+  const isBlackListToken = await blackListToken.findOne({ token });
   if (isBlackListToken) {
-    return res.json({ message: "Unauthorized" });
+    return res.status(401).json({ success: false, message: "Blacklisted token" });
   }
 
   try {
@@ -49,15 +48,14 @@ const captainAuth = async (req, res, next) => {
     const captain = await captainModel.findById(decoded.id);
 
     if (!captain) {
-      return res.status(401).json({ message: "Captain not found" });
+      return res.status(401).json({ success: false, message: "Captain not found" });
     }
 
     req.captain = captain;
-    
-    return next();
+    next();
   } catch (error) {
-    console.log(error);
-    res.json({ success: false, message: "Unauthorized" });
+    console.error("captainAuth error:", error);
+    return res.status(401).json({ success: false, message: "Unauthorized" });
   }
 };
 
