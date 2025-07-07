@@ -75,46 +75,70 @@ export const Home = () => {
   };
 
   const onPickupHandler = async (e) => {
-    const value = e.target.value;
-    setPickup(value);
+  const value = e.target.value;
+  setPickup(value);
 
-    if (!value.trim()) {
-      setPickupSuggestions([]);
-      return;
+  if (!value.trim()) {
+    setPickupSuggestions([]);
+    return;
+  }
+
+  const token = localStorage.getItem("token");
+  if (!token) {
+    console.error("Token not found.");
+    navigate("/userLogin");
+    return;
+  }
+
+  try {
+    const response = await axios.get(backendURL + "/maps/getSuggestions", {
+      params: { input: value },
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    setPickupSuggestions(response.data.suggestions);
+  } catch (error) {
+    console.log("Pickup Error:", error);
+    if (error.response?.status === 401) {
+      localStorage.removeItem("token");
+      navigate("/userLogin");
     }
+  }
+};
 
-    try {
-      const response = await axios.get(backendURL + "/maps/getSuggestions", {
-        params: { input: value },
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
 
-      setPickupSuggestions(response.data.suggestions);
-    } catch (error) {
-      console.log(error);
+ const onDestinationHandler = async (e) => {
+  const value = e.target.value;
+  setDestination(value);
+
+  if (!value.trim()) {
+    setDestinationSuggestions([]);
+    return;
+  }
+
+  const token = localStorage.getItem("token");
+  if (!token) {
+    console.error("Token not found.");
+    navigate("/userLogin");
+    return;
+  }
+
+  try {
+    const response = await axios.get(backendURL + "/maps/getSuggestions", {
+      params: { input: value },
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    setDestinationSuggestions(response.data.suggestions);
+  } catch (error) {
+    console.log("Destination Error:", error);
+    if (error.response?.status === 401) {
+      localStorage.removeItem("token");
+      navigate("/userLogin");
     }
-  };
+  }
+};
 
-  const onDestinationHandler = async (e) => {
-    const value = e.target.value;
-    setDestination(value);
-
-    if (!value.trim()) {
-      setDestinationSuggestions([]);
-      return;
-    }
-
-    try {
-      const response = await axios.get(backendURL + "/maps/getSuggestions", {
-        params: { input: value },
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
-
-      setDestinationSuggestions(response.data.suggestions);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const findTrip = async () => {
     try {
