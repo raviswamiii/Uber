@@ -30,7 +30,7 @@ export const UserRegister = () => {
       setEmail("");
       setPassword("");
 
-      const response = await axios.post(backendURL + "/user/register", newUser);
+      const response = await axios.post(backendURL + "/user/register", newUser, {withCredentials: true,});
 
       if (response.data.success) {
         setUserData(response.data.user);
