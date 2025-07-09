@@ -145,10 +145,7 @@ export const Home = () => {
       }
     })
     } catch (error) {
-      console.error(
-        "Error confirming ride:",
-        err.response?.data || err.message
-      );
+     console.log({message: error.message})
     }
   }
 

@@ -19,10 +19,6 @@ const userAuth = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
     const user = await userModel.findById(decoded.id);
 
-    if (!user) {
-      return res.status(401).json({ success: false, message: "User not found" });
-    }
-
     req.user = user;
     next();
   } catch (error) {
@@ -46,10 +42,6 @@ const captainAuth = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
     const captain = await captainModel.findById(decoded.id);
-
-    if (!captain) {
-      return res.status(401).json({ success: false, message: "Captain not found" });
-    }
 
     req.captain = captain;
     next();

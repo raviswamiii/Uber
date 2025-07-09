@@ -6,6 +6,6 @@ const {getCoordinates, getDistanceAndTime, getPlaceSuggestions} = require("../co
 
 mapRouter.get("/getCoordinates", query("address").isString().isLength({min: 3}), userAuth, getCoordinates);
 mapRouter.get("/getDistance", query("origin").isString().isLength({min: 3}), query("destination").isString().isLength({min: 3}), userAuth, getDistanceAndTime);
-mapRouter.get("/getSuggestions", query("input").isString().isLength({min: 3}), userAuth, getPlaceSuggestions);
+mapRouter.get("/getSuggestions", query("input").isString().isLength({min: 3}), getPlaceSuggestions);
 
 module.exports = mapRouter;

@@ -68,7 +68,7 @@ const createRide = async ({ user, pickup, destination, vehicleType }) => {
 
   const fare = await fareCalculation({ pickup, destination });
 
-  const ride = rideModel.create({
+  const ride = await rideModel.create({
     user,
     pickup,
     destination,

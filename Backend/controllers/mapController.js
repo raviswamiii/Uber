@@ -20,7 +20,6 @@ const getCoordinates = async (req, res) => {
     }
 } 
 
-
 const getDistanceAndTime = async (req, res) => {
     try {
         const { origin, destination } = req.query;

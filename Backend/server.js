@@ -14,6 +14,7 @@ const server = http.createServer(app);
 const { initializeSocket } = require("./socket");
 
 dotenv.config();
+databaseConnection();
 
 // app.use(cors({
 //   origin: process.env.FRONTEND_URL,
@@ -21,9 +22,6 @@ dotenv.config();
 // }));
 
 app.use(cors());
-
-databaseConnection();
-
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
