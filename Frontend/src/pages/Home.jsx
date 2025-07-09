@@ -75,70 +75,46 @@ export const Home = () => {
   };
 
   const onPickupHandler = async (e) => {
-  const value = e.target.value;
-  setPickup(value);
+    const value = e.target.value;
+    setPickup(value);
 
-  if (!value.trim()) {
-    setPickupSuggestions([]);
-    return;
-  }
-
-  const token = localStorage.getItem("token");
-  if (!token) {
-    console.error("Token not found.");
-    navigate("/userLogin");
-    return;
-  }
-
-  try {
-    const response = await axios.get(backendURL + "/maps/getSuggestions", {
-      params: { input: value },
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    setPickupSuggestions(response.data.suggestions);
-  } catch (error) {
-    console.log("Pickup Error:", error);
-    if (error.response?.status === 401) {
-      localStorage.removeItem("token");
-      navigate("/userLogin");
+    if (!value.trim()) {
+      setPickupSuggestions([]);
+      return;
     }
-  }
-};
 
+    try {
+      const response = await axios.get(backendURL + "/maps/getSuggestions", {
+        params: { input: value },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
 
- const onDestinationHandler = async (e) => {
-  const value = e.target.value;
-  setDestination(value);
-
-  if (!value.trim()) {
-    setDestinationSuggestions([]);
-    return;
-  }
-
-  const token = localStorage.getItem("token");
-  if (!token) {
-    console.error("Token not found.");
-    navigate("/userLogin");
-    return;
-  }
-
-  try {
-    const response = await axios.get(backendURL + "/maps/getSuggestions", {
-      params: { input: value },
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    setDestinationSuggestions(response.data.suggestions);
-  } catch (error) {
-    console.log("Destination Error:", error);
-    if (error.response?.status === 401) {
-      localStorage.removeItem("token");
-      navigate("/userLogin");
+      setPickupSuggestions(response.data.suggestions);
+    } catch (error) {
+      console.log(error);
     }
-  }
-};
+  };
 
+  const onDestinationHandler = async (e) => {
+    const value = e.target.value;
+    setDestination(value);
+
+    if (!value.trim()) {
+      setDestinationSuggestions([]);
+      return;
+    }
+
+    try {
+      const response = await axios.get(backendURL + "/maps/getSuggestions", {
+        params: { input: value },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+
+      setDestinationSuggestions(response.data.suggestions);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const findTrip = async () => {
     try {
@@ -171,7 +147,7 @@ export const Home = () => {
     } catch (error) {
       console.error(
         "Error confirming ride:",
-        error.response?.data || error.message
+        err.response?.data || err.message
       );
     }
   }
