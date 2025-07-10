@@ -43,7 +43,7 @@ export const Home = () => {
       setWaitingDriverPanel(true);
     });
 
-    return () => socket.off("rideConfirmed"); 
+    return () => socket.off("rideConfirmed");
   }, [socket]);
 
   useEffect(() => {
@@ -135,32 +135,36 @@ export const Home = () => {
 
   const createRide = async () => {
     try {
-      const response = await axios.post(backendURL + "/rides/createRides", {
-      pickup,
-      destination,
-      vehicleType
-    }, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      }
-    })
+      const response = await axios.post(
+        backendURL + "/rides/createRides",
+        {
+          user: userData._id,
+          pickup,
+          destination,
+          vehicleType,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
     } catch (error) {
-     console.log({message: error.message})
+      console.log({ message: error.message });
     }
-  }
+  };
 
- useEffect(() => {
-  if (!socket) return;
+  useEffect(() => {
+    if (!socket) return;
 
-  socket.on("rideStarted", (data) => {
-    setRide(data);
-    setWaitingDriverPanel(false);
-    navigate("/riding", { state: { ride: data } });
-  });
+    socket.on("rideStarted", (data) => {
+      setRide(data);
+      setWaitingDriverPanel(false);
+      navigate("/riding", { state: { ride: data } });
+    });
 
-  return () => socket.off("rideStarted");
-}, [socket]);
-
+    return () => socket.off("rideStarted");
+  }, [socket]);
 
   return (
     <div className="relative h-screen w-full overflow-hidden">
@@ -172,7 +176,7 @@ export const Home = () => {
           src="https://miro.medium.com/max/1280/0*gwMx05pqII5hbfmX.gif"
           alt=""
         /> */}
-        <LiveTrackingMapbox/>
+        <LiveTrackingMapbox />
         <div className=" bg-white w-full absolute bottom-0 ">
           <form
             onSubmit={onSubmitHandler}

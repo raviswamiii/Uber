@@ -14,11 +14,11 @@ const createRides = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { pickup, destination, vehicleType } = req.body;
+  const {user, pickup, destination, vehicleType } = req.body;
 
   try {
     const ride = await createRide({
-      user: req.user._id,
+      user,
       pickup,
       destination,
       vehicleType,
