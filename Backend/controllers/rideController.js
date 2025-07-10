@@ -14,7 +14,7 @@ const createRides = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { userId, pickup, destination, vehicleType } = req.body;
+  const { pickup, destination, vehicleType } = req.body;
 
   try {
     const ride = await createRide({
@@ -35,7 +35,7 @@ const createRides = async (req, res) => {
     ride.otp = "";
 
     const rideWithUser = await rideModel
-      .findOne({ _id: ride._id })
+      .findOne({ _id: ride._id})
       .populate("user");
 
     captainsInRadius.map((captain) => {
@@ -47,8 +47,8 @@ const createRides = async (req, res) => {
 
     res.status(201).json(ride);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
+ console.error("Error in createRides controller:", error);
+    return res.status(500).json({ message: error.message });  }
 };
 
 const getFare = async (req, res) => {
@@ -133,3 +133,4 @@ const confirmRides = async (req, res) => {
     } 
 }
 module.exports = { createRides, getFare, confirmRides, startRides, endRides };
+ 
